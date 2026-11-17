@@ -1,0 +1,80 @@
+CSS 1 vs CSS 2 vs CSS 3
+
+CSS stands for Cascading Style Sheets. It controls the appearance,
+formatting and layout of HTML web pages.
+
+1.  CSS 1 Released: 1996
+
+CSS1 was the first official version of CSS and introduced basic styling.
+
+Main features: - Fonts and text formatting - Text colors - Background
+colors and images - Margins and padding - Borders - Basic positioning -
+Basic selectors such as element, class and ID selectors
+
+Example: p { color: blue; font-size: 16px; }
+
+Limitation: CSS1 provided only basic styling and layout control.
+
+2.  CSS 2 Released: 1998
+
+CSS2 expanded CSS1 and provided better control over page layout.
+
+Main features: - Static, relative, absolute and fixed positioning -
+Floating elements - Z-index and layering - More advanced selectors -
+Media types - Better table styling - Generated content -
+Pseudo-elements - Improved typography
+
+Example: .box { width: 300px; float: left; margin: 20px; }
+
+CSS 2.1 CSS2.1 is a revised version of CSS2 and is commonly used when a
+project specifically requires CSS 2.1.
+
+Common CSS2.1 techniques: - Floats instead of Flexbox/Grid - Width and
+height - Margins and padding - Positioning - Borders and backgrounds -
+Basic selectors - Media queries - Tables for tabular data
+
+CSS2.1 does NOT include modern features such as: - Flexbox - CSS Grid -
+CSS variables - CSS transforms - CSS gradients
+
+Main features: - border-radius - box-shadow - gradients - transitions -
+animations - transforms - Flexbox - CSS Grid - opacity - advanced
+selectors - CSS variables - responsive design
+
+Example: .card { border-radius: 12px; box-shadow: 0 5px 20px #999;
+transition: 0.3s; }
+
+.card:hover { transform: translateY(-5px); }
+
+QUICK COMPARISON
+
+Feature CSS1 CSS2/2.1 CSS3
+
+Basic styling Yes Yes Yes Colors/backgrounds Yes Yes Yes Margins/padding
+Yes Yes Yes Positioning Basic Advanced Advanced Floats Limited Yes Yes
+Media queries No Yes Yes Rounded corners No No Yes Shadows No No Yes
+Gradients No No Yes Transitions No No Yes Animations No No Yes
+Transforms No No Yes Flexbox No No Yes CSS Grid No No Yes CSS Variables
+No No Yes
+
+FOR YOUR NITJ WEBSITE
+
+If your assignment specifically requires CSS 2.1:
+
+1.  Use normal HTML for the structure.
+2.  Keep CSS in a separate style.css file.
+3.  Use floats and positioning for layout.
+4.  Avoid Flexbox and CSS Grid.
+5.  Avoid CSS variables.
+6.  Avoid transforms and gradients.
+7.  Keep the CSS simple and readable.
+8.  Use media queries only where required.
+
+Important: Tailwind CSS is a modern utility framework and is not CSS
+2.1. If Tailwind is used for animations, the project is not strictly CSS
+2.1-only. For a strict CSS 2.1 assignment, avoid Tailwind and modern CSS
+animations unless your instructor permits them.
+
+IN SHORT
+
+CSS1 = Basic styling CSS2/2.1 = Better layout and positioning CSS3 =
+Modern styling, responsive layouts, animations and advanced features

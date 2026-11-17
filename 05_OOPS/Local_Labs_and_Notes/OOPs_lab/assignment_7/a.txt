@@ -1,0 +1,232 @@
+# 🎓 Comprehensive Masterclass: Dynamic Memory (`new` & `delete`)
+*(Everything you need to master Lab 7 and ace your viva/quiz)*
+
+---
+
+## 🧠 The Foundation: Stack vs. Heap
+
+Before diving into the 5 topics, you must understand **where** memory comes from:
+
+| Feature | Stack Memory | Heap (Free Store) Memory |
+| :--- | :--- | :--- |
+| **Allocation** | Automatic (compile-time fixed size) | Manual (runtime dynamic size) |
+| **Lifetime** | Dies when function/scope `{ }` ends | Lives until **you explicitly delete it** |
+| **Keyword** | `int arr[10];` | `int* arr = new int[10];` |
+| **Speed** | Extremely fast | Slightly slower (OS finds free block) |
+| **Danger** | Stack Overflow if too large | **Memory Leaks & Dangling Pointers** |
+
+> ⚠️ **The Golden Rule of C++:**  
+> Every **`new`** must have a matching **`delete`**.  
+> Every **`new[]`** must have a matching **`delete[]`**.
+
+---
+
+## 📌 Topic 1: Dynamic Array of Objects (`new Type[N]` & `delete[]`)
+
+### 1. Concept:
+When you write `Student* s = new Student[N];`, the OS performs two distinct actions:
+1. Allocates raw memory on the Heap for $N$ `Student` objects.
+2. Calls the **default constructor** for all $N$ objects consecutively.
+
+### 2. Why `delete[]` is Critical (Top Viva Question!):
+```cpp
+Student* s = new Student[5];
+
+delete s;    // ❌ DISASTER! Undefined Behavior! Only calls 1 destructor!
+delete[] s;  // ✅ CORRECT! Calls destructors for all 5 objects, then frees block.
+```
+> **Exam Question:** *"What is the difference between `delete` and `delete[]`?"*  
+> **Answer:** `delete` only frees a single object and calls **one** destructor. `delete[]` reads the array metadata header (where the compiler secretly stores the array size), calls the **destructor for every element**, and then releases the entire memory block.
+
+### 3. Key Pattern:
+```cpp
+int n = 5;
+Student* arr = new Student[n]; // 1. Allocate
+
+for (int i = 0; i < n; i++) {
+    arr[i].input(...);         // 2. Use like a normal array
+}
+
+delete[] arr;                  // 3. Deallocate
+arr = nullptr;                 // 4. Clean up pointer!
+```
+
+---
+
+## 📌 Topic 2: Dynamic 2D Arrays (Pointer-to-Pointer `Type**`)
+
+In standard C++, `int arr[N][M]` requires `M` to be a compile-time constant. To create a true runtime $N \times M$ matrix, we use **a pointer to an array of pointers** (`int**`).
+
+```
+matrix (int**) ──► [ ptr0 ] ──► [ col0, col1, col2, ... ] (Row 0)
+                    [ ptr1 ] ──► [ col0, col1, col2, ... ] (Row 1)
+                    [ ptr2 ] ──► [ col0, col1, col2, ... ] (Row 2)
+```
+
+### 1. Allocation (Step-by-Step):
+```cpp
+int N = 4, M = 3;
+
+// Step 1: Allocate an array of N integer pointers (the rows)
+int** matrix = new int*[N];
+
+// Step 2: Allocate an array of M integers for each row
+for (int i = 0; i < N; i++) {
+    matrix[i] = new int[M];
+}
+```
+
+### 2. Accessing Elements:
+You can use normal 2D array syntax:
+```cpp
+matrix[i][j] = 100; // Under the hood: *(*(matrix + i) + j) = 100;
+```
+
+### 3. Deallocation Order (Reverse Order!):
+> ⚠️ **Common Mistake:** If you do `delete[] matrix;` first, you lose the addresses of all the rows! The row memory becomes orphaned permanently (a massive **Memory Leak**).
+
+```cpp
+// 1. Delete each row FIRST
+for (int i = 0; i < N; i++) {
+    delete[] matrix[i];
+}
+
+// 2. Delete the outer array of row pointers LAST
+delete[] matrix;
+matrix = nullptr;
+```
+
+---
+
+## 📌 Topic 3: Dynamic Memory Resizing Without `realloc()`
+
+In C, you have `realloc()`. In OOP C++, `realloc()` is discouraged because it blindly copies raw bytes without calling copy constructors or destructors for objects.
+
+### The Standard 5-Step C++ Resizing Algorithm:
+Suppose array size is $N$, and a new element arrives:
+
+```
+Old Array (size 3): [ 10 | 20 | 30 ]
+New Array (size 4): [ 10 | 20 | 30 | 40 ]
+                       ▲    ▲    ▲     ▲
+                       └──Copy Old─┘  Insert New
+```
+
+```cpp
+// Existing: double* arr = new double[N];
+
+// Step 1: Allocate a new array of capacity (N + 1)
+double* temp = new double[N + 1];
+
+// Step 2: Copy all existing elements from old array to new array
+for (int i = 0; i < N; i++) {
+    temp[i] = arr[i];
+}
+
+// Step 3: Insert the new element at the end
+temp[N] = newSalary;
+
+// Step 4: Delete the old array memory (PREVENT MEMORY LEAKS!)
+delete[] arr;
+
+// Step 5: Point the original pointer to the new memory block
+arr = temp;
+N++; // Update current size counter
+```
+
+> **Why this matters:** This 5-step process is the exact conceptual implementation behind `std::vector::push_back()` in C++!
+
+---
+
+## 📌 Topic 4: Array of Pointers to Objects (`Type**`)
+
+Notice the vital distinction between Topic 1 and Topic 4:
+
+| Feature | Dynamic Array of Objects (`Topic 1`) | Array of Pointers to Objects (`Topic 4`) |
+| :--- | :--- | :--- |
+| **Declaration** | `Employee* arr = new Employee[N];` | `Employee** arr = new Employee*[N];` |
+| **Object Storage** | All objects contiguous in one single block | Each object is allocated independently on Heap |
+| **Memory Layout** | `[ Obj0 | Obj1 | Obj2 ]` | `[ Ptr0 | Ptr1 | Ptr2 ] ──► separate objects` |
+| **Deleting One** | Cannot delete an individual object | **Can delete any single object independently!** |
+
+### 1. Allocation:
+```cpp
+Employee** list = new Employee*[N]; // Allocate array of pointers
+
+for (int i = 0; i < N; i++) {
+    list[i] = new Employee(id, name, salary); // Allocate each object separately
+}
+```
+
+### 2. Accessing Members:
+Since `list[i]` is a pointer:
+```cpp
+list[i]->display(); // Use arrow operator (->)
+```
+
+### 3. Deleting an Object & The "Dangling Pointer" Danger:
+If an employee salary is below a threshold and you delete it:
+```cpp
+delete list[i];       // Memory is freed!
+list[i] = nullptr;   // CRUCIAL: Set to nullptr immediately!
+```
+
+> **What is a Dangling Pointer?**  
+> A pointer that still holds the memory address of an object that has already been deallocated. Accessing `list[i]->salary` after `delete list[i]` causes **Undefined Behavior / Segmentation Fault**. Setting it to `nullptr` allows you to safely check:
+> ```cpp
+> if (list[i] != nullptr) {
+>     list[i]->display();
+> }
+> ```
+
+### 4. Final Cleanup:
+```cpp
+// 1. Delete any active objects still remaining
+for (int i = 0; i < N; i++) {
+    if (list[i] != nullptr) {
+        delete list[i];
+    }
+}
+// 2. Delete the pointer array itself
+delete[] list;
+list = nullptr;
+```
+
+---
+
+## 📌 Topic 5: Runtime Dynamic Filtering (Two Dynamic Arrays)
+
+Often in real systems, you don't know ahead of time how many items will satisfy a condition (e.g., how many products cost more than average).
+
+### The Two-Pass Strategy:
+1. **Pass 1 (Count):** Iterate through the original array to count how many elements match the criteria (`countAbove`).
+2. **Allocate:** Create the second array with the exact exact required size:  
+   `Product* filtered = new Product[countAbove];`
+3. **Pass 2 (Populate):** Copy only the matching items into the new array.
+4. **Deallocate Both:** When finished, remember that **both** arrays were allocated with `new[]`, so both must be deleted:
+   ```cpp
+   delete[] original;
+   delete[] filtered;
+   original = nullptr;
+   filtered = nullptr;
+   ```
+
+---
+
+## 🎯 High-Yield Viva & Quiz Cheat Sheet
+
+### Q1: What is a Memory Leak?
+* **Answer:** When memory is allocated dynamically using `new` on the Heap, but the program loses the address of that memory without calling `delete`. That memory remains locked and inaccessible until the program terminates.
+
+### Q2: What is the difference between `new` vs `malloc()` and `delete` vs `free()`?
+| Feature | `new` / `delete` (C++) | `malloc()` / `free()` (C) |
+| :--- | :--- | :--- |
+| **Type** | Operator (language keyword) | Library function (`<cstdlib>`) |
+| **Constructors** | **Calls constructor/destructor** | Only allocates raw uninitialized bytes |
+| **Return Type** | Exact typed pointer (no cast needed) | Returns `void*` (requires typecasting) |
+| **Size Calculation**| Compiler calculates size automatically | You must pass `sizeof(type) * N` |
+| **Failure** | Throws `std::bad_alloc` exception | Returns `NULL` |
+
+### Q3: Why write `ptr = nullptr;` after `delete ptr;`?
+* Deleting a pointer frees the memory it points to, but **does not erase the address inside the pointer variable**. Setting it to `nullptr` turns a dangerous "dangling pointer" into a safe null pointer. (In C++, calling `delete nullptr;` is guaranteed to be safe and does nothing).
+

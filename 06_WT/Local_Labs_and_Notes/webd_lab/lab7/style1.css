@@ -1,0 +1,50 @@
+.box {
+    margin: 50px;
+    background-color: blue;
+    height: 150px;
+    width: 150px;
+
+    transform: translateX(0);
+
+    transition-duration: 2s;
+    transition-property: all;
+}
+
+
+.linear {
+    transition-timing-function: linear;
+}
+
+
+.ease {
+    transition-timing-function: ease;
+}
+
+
+.ease-in {
+    transition-timing-function: ease-in;
+}
+
+
+.ease-out {
+    transition-timing-function: ease-out;
+}
+
+.ease-in-out {
+    transition-timing-function: ease-in-out;
+}
+.box:hover {
+    background-color: red;
+
+    transform:
+        scale(0.5)
+        translateX(-50px)
+        rotate(10deg);
+
+    width: 150px;
+    height: 150px;
+
+    box-shadow:
+        rgba(0, 0, 0, 0.75)
+        10px 10px 20px;
+}

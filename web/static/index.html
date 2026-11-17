@@ -1,0 +1,2612 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIT Jalandhar B.Tech Sem 3 — Study Kit & Sketch Portal</title>
+  
+  <!-- Architectural & Handwritten Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sketch: ['"Architects Daughter"', 'cursive'],
+            hand: ['"Patrick Hand"', 'cursive'],
+            note: ['"Caveat"', 'cursive'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          colors: {
+            paper: '#fdfbf7',
+            parchment: '#faf7f0',
+            ink: '#18181b',
+            sketchslate: '#27272a',
+            highlight: {
+              yellow: '#fef08a',
+              mint: '#a7f3d0',
+              sky: '#bae6fd',
+              lavender: '#e9d5ff',
+              coral: '#fed7aa',
+              rose: '#fecdd3'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Marked.js for Markdown & KaTeX for LaTeX Math -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Canvas Confetti for Flashcard & Quiz Mastery -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* ================= SKETCHMORPHISM DESIGN SYSTEM ================= */
+    
+    /* Notebook Graph Paper Grid */
+    .bg-graph-paper {
+      background-color: #fdfbf7;
+      background-image: 
+        linear-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    /* Ruled Margin Paper for Reading */
+    .bg-ruled-paper {
+      background-color: #faf7f0;
+      background-image: repeating-linear-gradient(transparent, transparent 27px, rgba(148, 163, 184, 0.25) 27px, rgba(148, 163, 184, 0.25) 28px);
+    }
+
+    /* Red Margin Rule on Left */
+    .notebook-left-margin {
+      border-left: 2px dashed rgba(239, 68, 68, 0.45);
+      position: relative;
+    }
+
+    /* Hand-Drawn Wobbly Borders */
+    .sketch-border {
+      border: 2px solid #18181b;
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    }
+    .sketch-border-alt {
+      border: 2px solid #18181b;
+      border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+    }
+    .sketch-border-soft {
+      border: 2px solid #18181b;
+      border-radius: 20px 255px 20px 255px / 255px 20px 255px 20px;
+    }
+    .sketch-pill {
+      border: 2px solid #18181b;
+      border-radius: 9999px;
+    }
+
+    /* Hard Sketch Drop Shadows */
+    .sketch-shadow-sm {
+      box-shadow: 2px 2px 0px #18181b;
+    }
+    .sketch-shadow {
+      box-shadow: 3px 3px 0px #18181b;
+    }
+    .sketch-shadow-lg {
+      box-shadow: 5px 5px 0px #18181b;
+    }
+    .sketch-shadow-active {
+      box-shadow: 1px 1px 0px #18181b;
+      transform: translate(2px, 2px);
+    }
+
+    /* Tactile Sketch Buttons */
+    .sketch-btn {
+      border: 2px solid #18181b;
+      border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+      box-shadow: 3px 3px 0px #18181b;
+      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .sketch-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px #18181b;
+    }
+    .sketch-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #18181b;
+    }
+
+    /* Subject Notebook Tabs */
+    .subj-tab-sketch {
+      border: 2px solid #18181b;
+      border-bottom: 2px solid #18181b;
+      border-radius: 12px 14px 0 0;
+      box-shadow: 2px -2px 0px #18181b;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .subj-tab-sketch:hover {
+      transform: translateY(-2px);
+      box-shadow: 3px -3px 0px #18181b;
+    }
+    .subj-tab-sketch.active {
+      transform: translateY(-3px);
+      box-shadow: 4px -4px 0px #18181b;
+      border-bottom: 2px solid transparent !important;
+      z-index: 10;
+    }
+
+    /* Washi Tape Accent */
+    .washi-tape {
+      position: relative;
+    }
+    .washi-tape::before {
+      content: '';
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1.5deg);
+      width: 64px;
+      height: 18px;
+      background: rgba(254, 240, 138, 0.75);
+      border: 1px dashed rgba(161, 98, 7, 0.35);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      z-index: 15;
+      pointer-events: none;
+    }
+    .washi-tape-mint::before {
+      background: rgba(167, 243, 208, 0.75);
+      border: 1px dashed rgba(6, 95, 70, 0.35);
+    }
+    .washi-tape-sky::before {
+      background: rgba(186, 230, 253, 0.75);
+      border: 1px dashed rgba(3, 105, 161, 0.35);
+    }
+    .washi-tape-rose::before {
+      background: rgba(254, 205, 211, 0.75);
+      border: 1px dashed rgba(159, 18, 57, 0.35);
+    }
+    .washi-tape-yellow::before {
+      background: rgba(254, 240, 138, 0.75);
+      border: 1px dashed rgba(161, 98, 7, 0.35);
+    }
+
+    /* Sticky Note Card */
+    .sticky-note {
+      background: #fef08a;
+      border: 2px solid #18181b;
+      border-bottom-right-radius: 26px 6px;
+      box-shadow: 3px 3px 0px #18181b;
+      transform: rotate(-0.75deg);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .sticky-note:hover {
+      transform: rotate(0deg) scale(1.01);
+      box-shadow: 5px 5px 0px #18181b;
+    }
+
+    /* Highlighter Swashes */
+    .hl-yellow {
+      background: linear-gradient(104deg, rgba(254,240,138,0) 0.5%, rgba(254,240,138,0.95) 2%, rgba(254,240,138,0.85) 96%, rgba(254,240,138,0) 99%);
+      padding: 0.1em 0.35em;
+      border-radius: 0.25em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .hl-mint {
+      background: linear-gradient(104deg, rgba(167,243,208,0) 0.5%, rgba(167,243,208,0.95) 2%, rgba(167,243,208,0.85) 96%, rgba(167,243,208,0) 99%);
+      padding: 0.1em 0.35em;
+      border-radius: 0.25em;
+    }
+    .hl-sky {
+      background: linear-gradient(104deg, rgba(186,230,253,0) 0.5%, rgba(186,230,253,0.95) 2%, rgba(186,230,253,0.85) 96%, rgba(186,230,253,0) 99%);
+      padding: 0.1em 0.35em;
+      border-radius: 0.25em;
+    }
+    .hl-lavender {
+      background: linear-gradient(104deg, rgba(233,213,255,0) 0.5%, rgba(233,213,255,0.95) 2%, rgba(233,213,255,0.85) 96%, rgba(233,213,255,0) 99%);
+      padding: 0.1em 0.35em;
+      border-radius: 0.25em;
+    }
+    .hl-coral {
+      background: linear-gradient(104deg, rgba(254,215,170,0) 0.5%, rgba(254,215,170,0.95) 2%, rgba(254,215,170,0.85) 96%, rgba(254,215,170,0) 99%);
+      padding: 0.1em 0.35em;
+      border-radius: 0.25em;
+    }
+    .hl-rose {
+      background: linear-gradient(104deg, rgba(254,205,211,0) 0.5%, rgba(254,205,211,0.95) 2%, rgba(254,205,211,0.85) 96%, rgba(254,205,211,0) 99%);
+      padding: 0.1em 0.35em;
+      border-radius: 0.25em;
+    }
+
+    /* 3D Flashcard Flip Mechanics */
+    .card-scene {
+      perspective: 1200px;
+    }
+    .card-flipper {
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-flipper.flipped {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Custom Sketch Scrollbars */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1ede4;
+      border-left: 1px solid #e2ddd3;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #a1a1aa;
+      border: 1.5px solid #18181b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #71717a;
+    }
+
+    /* Markdown Reader Typography */
+    .prose-sketch {
+      color: #18181b;
+      line-height: 1.75;
+      font-size: 0.95rem;
+    }
+    .prose-sketch h1 {
+      font-family: 'Architects Daughter', cursive;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-top: 1.6rem;
+      margin-bottom: 0.8rem;
+      border-bottom: 2px dashed #cbd5e1;
+      padding-bottom: 0.5rem;
+    }
+    .prose-sketch h2 {
+      font-family: 'Architects Daughter', cursive;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 1.4rem;
+      margin-bottom: 0.6rem;
+      background: linear-gradient(104deg, rgba(254,240,138,0) 0.5%, rgba(254,240,138,0.7) 2%, rgba(254,240,138,0.6) 96%, rgba(254,240,138,0) 99%);
+      display: inline-block;
+      padding: 0 0.4rem;
+      border-radius: 4px;
+    }
+    .prose-sketch h3 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0369a1;
+      margin-top: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+    .prose-sketch p { margin-bottom: 0.95rem; }
+    .prose-sketch ul, .prose-sketch ol { margin-left: 1.6rem; margin-bottom: 0.95rem; }
+    .prose-sketch li { margin-bottom: 0.35rem; list-style-type: square; }
+    .prose-sketch ol li { list-style-type: decimal; }
+    .prose-sketch code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #fef08a;
+      color: #18181b;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid #18181b;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      box-shadow: 1px 1px 0px #18181b;
+    }
+    .prose-sketch pre {
+      background: #18181b;
+      color: #f4f4f5;
+      border: 2px solid #18181b;
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.1rem 0;
+      box-shadow: 3px 3px 0px #71717a;
+    }
+    .prose-sketch pre code {
+      background: transparent;
+      color: #38bdf8;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      font-size: 0.85rem;
+    }
+    .prose-sketch table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2rem 0;
+      font-size: 0.875rem;
+      background: #ffffff;
+      border: 2px solid #18181b;
+      box-shadow: 3px 3px 0px #18181b;
+    }
+    .prose-sketch th, .prose-sketch td {
+      border: 1px solid #18181b;
+      padding: 0.65rem 0.9rem;
+      text-align: left;
+    }
+    .prose-sketch th {
+      background: #fef08a;
+      font-family: 'Architects Daughter', cursive;
+      font-weight: 700;
+      color: #18181b;
+    }
+    .prose-sketch blockquote {
+      border-left: 4px solid #18181b;
+      background: #fef9c3;
+      padding: 0.75rem 1.1rem;
+      color: #334155;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.05rem;
+      box-shadow: 2px 2px 0px #18181b;
+    }
+
+    /* Range input sketch style */
+    input[type=range] {
+      accent-color: #18181b;
+    }
+  </style>
+</head>
+
+<body class="h-full bg-graph-paper text-slate-800 flex flex-col font-sans select-none overflow-hidden">
+
+  <!-- ================= TOP HAND-DRAWN HEADER ================= -->
+  <header class="h-16 bg-[#ffffff] border-b-2 border-slate-900 px-4 md:px-5 flex items-center justify-between shrink-0 shadow-sm z-30 relative">
+    
+    <!-- Left: Brand Logo & Mobile Sidebar Toggle -->
+    <div class="flex items-center gap-3">
+      <!-- Mobile Sidebar Toggle -->
+      <button id="mobileSidebarToggleBtn" title="Toggle Documents Sidebar" class="md:hidden sketch-btn p-1.5 bg-yellow-200 text-slate-900">
+        <i data-lucide="menu" class="w-4 h-4"></i>
+      </button>
+
+      <!-- Hand-drawn notebook icon -->
+      <div class="w-10 h-10 rounded-xl bg-yellow-300 border-2 border-slate-900 flex items-center justify-center text-slate-900 shadow-[2px_2px_0px_#18181b] transform -rotate-2 shrink-0">
+        <i data-lucide="book-open" class="w-5 h-5"></i>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-sketch font-bold text-slate-900 text-base md:text-lg tracking-tight">NIT Jalandhar B.Tech</span>
+          <span class="hidden sm:inline font-hand text-xs px-2.5 py-0.5 rounded-full bg-yellow-200 text-slate-900 border-2 border-slate-900 font-bold shadow-[1.5px_1.5px_0px_#18181b]">
+            ★ Sem 3 Master Kit
+          </span>
+        </div>
+        <p class="hidden sm:block font-hand text-[13px] text-slate-600 -mt-0.5">Sketchmorphic Study Portal • CSA, DBMS, DSA, DSS, OOPS, WT</p>
+      </div>
+    </div>
+
+    <!-- Center: Smart Search Input -->
+    <div class="relative w-64 md:w-96 max-w-md mx-2">
+      <input
+        type="text"
+        id="searchDocInput"
+        placeholder="Search notes, formulas, PYQs, keywords..."
+        class="w-full bg-[#fdfbf7] border-2 border-slate-900 rounded-xl text-xs pl-9 pr-8 py-2 text-slate-900 placeholder-slate-500 focus:outline-none focus:bg-white shadow-[2px_2px_0px_#18181b] transition-all font-mono"
+      />
+      <i data-lucide="search" class="w-4 h-4 text-slate-900 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+      <button id="clearSearchBtn" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700">
+        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+      </button>
+    </div>
+
+    <!-- Right: Sketch Action Tools -->
+    <div class="flex items-center gap-2">
+      <!-- Study Sprint Pomodoro -->
+      <button id="pomodoroModalBtn" title="Open Pomodoro Sprint Timer" class="sketch-btn px-2.5 md:px-3 py-1.5 bg-rose-200 text-slate-900 font-hand text-xs md:text-sm font-bold flex items-center gap-1.5">
+        <i data-lucide="timer" class="w-4 h-4 text-rose-700"></i>
+        <span class="hidden sm:inline">Sprint</span>
+        <span id="headerTimerBadge" class="font-mono text-xs font-bold text-rose-900">25:00</span>
+      </button>
+
+      <!-- Doodle Canvas Toggle -->
+      <button id="scratchpadToggleBtn" title="Toggle Scratchpad Canvas" class="sketch-btn px-2.5 md:px-3 py-1.5 bg-yellow-200 text-slate-900 font-hand text-xs md:text-sm font-bold flex items-center gap-1.5">
+        <i data-lucide="pencil" class="w-4 h-4 text-amber-700"></i>
+        <span class="hidden sm:inline">Scratchpad</span>
+      </button>
+
+      <!-- Download Current File -->
+      <button id="downloadActiveBtn" title="Download Active Document" class="sketch-btn px-2.5 md:px-3 py-1.5 bg-sky-200 text-slate-900 font-hand text-xs md:text-sm font-bold flex items-center gap-1.5">
+        <i data-lucide="download" class="w-4 h-4 text-sky-800"></i>
+        <span class="hidden md:inline">Download</span>
+      </button>
+
+      <!-- Full Tab View -->
+      <button id="openNewTabBtn" title="Open in Full Browser Window" class="sketch-btn px-2 md:px-2.5 py-1.5 bg-white text-slate-900 font-hand text-sm font-bold flex items-center gap-1">
+        <i data-lucide="external-link" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- ================= SUBJECT SKETCH TABS ================= -->
+  <nav class="h-12 bg-[#faf7f0] border-b-2 border-slate-900 px-4 md:px-5 flex items-end gap-2 shrink-0 overflow-x-auto z-20">
+    <button data-subject="01_CSA" class="subj-tab-sketch active px-3.5 py-1.5 font-sketch text-xs font-bold bg-[#bae6fd] text-slate-900 flex items-center gap-1.5 shrink-0">
+      <span>📐 CSA</span>
+      <span class="text-[10px] font-mono opacity-80">(Arch)</span>
+    </button>
+    <button data-subject="02_DBMS" class="subj-tab-sketch px-3.5 py-1.5 font-sketch text-xs font-bold bg-white text-slate-700 hover:bg-[#a7f3d0] flex items-center gap-1.5 shrink-0">
+      <span>🗄️ DBMS</span>
+      <span class="text-[10px] font-mono opacity-80">(Data)</span>
+    </button>
+    <button data-subject="03_DSA" class="subj-tab-sketch px-3.5 py-1.5 font-sketch text-xs font-bold bg-white text-slate-700 hover:bg-[#fed7aa] flex items-center gap-1.5 shrink-0">
+      <span>⚡ DSA</span>
+      <span class="text-[10px] font-mono opacity-80">(Algo)</span>
+    </button>
+    <button data-subject="04_DSS" class="subj-tab-sketch px-3.5 py-1.5 font-sketch text-xs font-bold bg-white text-slate-700 hover:bg-[#e9d5ff] flex items-center gap-1.5 shrink-0">
+      <span>🔢 DSS</span>
+      <span class="text-[10px] font-mono opacity-80">(Math)</span>
+    </button>
+    <button data-subject="05_OOPS" class="subj-tab-sketch px-3.5 py-1.5 font-sketch text-xs font-bold bg-white text-slate-700 hover:bg-[#fecdd3] flex items-center gap-1.5 shrink-0">
+      <span>💻 OOPS</span>
+      <span class="text-[10px] font-mono opacity-80">(C++)</span>
+    </button>
+    <button data-subject="06_WT" class="subj-tab-sketch px-3.5 py-1.5 font-sketch text-xs font-bold bg-white text-slate-700 hover:bg-[#fef08a] flex items-center gap-1.5 shrink-0">
+      <span>🌐 WT</span>
+      <span class="text-[10px] font-mono opacity-80">(Web)</span>
+    </button>
+  </nav>
+
+
+  <!-- ================= 2-PANEL NOTEBOOK WORKSPACE ================= -->
+  <div class="flex-1 flex overflow-hidden relative">
+
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="mobileSidebarBackdrop" class="hidden md:hidden fixed inset-0 bg-slate-900/40 z-20 backdrop-blur-xs"></div>
+
+    <!-- ---------------- LEFT SIDEBAR: NOTEBOOK INDEX & DOCS ---------------- -->
+    <aside id="mainSidebar" class="w-80 md:w-84 bg-[#faf7f0] border-r-2 border-slate-900 flex flex-col shrink-0 z-30 md:z-10 notebook-left-margin fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out" style="width: 22rem;">
+      
+      <!-- Active Subject Card with Washi Tape -->
+      <div class="p-3.5 border-b-2 border-slate-900 bg-white m-3 rounded-xl sketch-border sketch-shadow washi-tape washi-tape-sky" id="sidebarSubjectCard">
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 id="activeSubjectName" class="font-sketch font-bold text-slate-900 text-sm tracking-tight leading-snug">Computer System Architecture</h2>
+            <div class="flex items-center gap-2 mt-1">
+              <span id="activeSubjectCode" class="text-[11px] font-mono bg-sky-100 text-sky-900 px-1.5 py-0.5 rounded border border-slate-900 font-bold">ITX-201</span>
+              <span id="activeSubjectCount" class="font-hand text-xs text-slate-600 font-bold">12 Docs Available</span>
+            </div>
+          </div>
+          <span id="subjectAvatarBadge" class="text-xl">📐</span>
+        </div>
+        <p id="activeSubjectTagline" class="font-hand text-xs text-slate-600 mt-2 line-clamp-2">Hardware, Datapaths, Micro-ops & Memory Hierarchy</p>
+      </div>
+
+      <!-- Quick Generative Widget Shortcuts -->
+      <div class="px-3 pb-2 grid grid-cols-5 gap-1">
+        <button id="quickCheatsheetBtn" title="Formulas" class="sketch-btn px-1.5 py-1 bg-yellow-100 hover:bg-yellow-200 font-hand text-[11px] font-bold flex flex-col items-center justify-center text-center">
+          <span class="text-sm">⚡</span>
+          <span>Formulas</span>
+        </button>
+        <button id="quickFlashcardsBtn" title="Flashcards" class="sketch-btn px-1.5 py-1 bg-emerald-100 hover:bg-emerald-200 font-hand text-[11px] font-bold flex flex-col items-center justify-center text-center">
+          <span class="text-sm">🃏</span>
+          <span>Cards</span>
+        </button>
+        <button id="quickExamSimBtn" title="Exam Simulator" class="sketch-btn px-1.5 py-1 bg-rose-100 hover:bg-rose-200 font-hand text-[11px] font-bold flex flex-col items-center justify-center text-center">
+          <span class="text-sm">🎯</span>
+          <span>Exam</span>
+        </button>
+        <button id="quickCalcBtn" title="Formula Calculators" class="sketch-btn px-1.5 py-1 bg-blue-100 hover:bg-blue-200 font-hand text-[11px] font-bold flex flex-col items-center justify-center text-center">
+          <span class="text-sm">🧮</span>
+          <span>Calcs</span>
+        </button>
+        <button id="quickSyllabusBtn" title="5-Unit Roadmap" class="sketch-btn px-1.5 py-1 bg-purple-100 hover:bg-purple-200 font-hand text-[11px] font-bold flex flex-col items-center justify-center text-center">
+          <span class="text-sm">📊</span>
+          <span>Roadmap</span>
+        </button>
+      </div>
+
+      <!-- Document Category List -->
+      <div class="flex-1 overflow-y-auto px-3 py-2 space-y-3.5" id="sidebarDocList">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+
+    </aside>
+
+
+    <!-- ---------------- RIGHT MAIN WORKSPACE: MULTI-MODE VIEWER ---------------- -->
+    <main class="flex-1 flex flex-col bg-graph-paper overflow-hidden relative">
+      
+      <!-- Viewer Mode Switcher & Top Action Bar -->
+      <div class="h-12 bg-white border-b-2 border-slate-900 px-3 md:px-5 flex items-center justify-between shrink-0 shadow-sm z-20 overflow-x-auto">
+        
+        <!-- Document Meta Badge -->
+        <div class="flex items-center gap-2.5 min-w-0 mr-3">
+          <div id="viewerTypeBadge" class="font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-rose-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b] shrink-0">
+            PDF
+          </div>
+          <span id="viewerTitle" class="font-sketch text-xs md:text-sm font-bold text-slate-900 truncate">Select a study document from the notebook</span>
+          <span id="viewerFileSize" class="text-xs text-slate-500 font-mono hidden sm:inline"></span>
+        </div>
+
+        <!-- Mode Toggle Switcher -->
+        <div id="modeSwitcherContainer" class="flex items-center gap-1 shrink-0">
+          <button id="modePdfBtn" class="sketch-btn px-2.5 py-1 font-hand text-xs font-bold bg-white text-slate-900 flex items-center gap-1">
+            <i data-lucide="file" class="w-3.5 h-3.5 text-rose-600"></i>
+            <span>PDF</span>
+          </button>
+          <button id="modeMdBtn" class="sketch-btn px-2.5 py-1 font-hand text-xs font-bold bg-[#faf7f0] text-slate-700 flex items-center gap-1">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-600"></i>
+            <span>Notes</span>
+          </button>
+          <button id="modeCheatBtn" class="sketch-btn px-2.5 py-1 font-hand text-xs font-bold bg-[#faf7f0] text-slate-700 flex items-center gap-1">
+            <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-600"></i>
+            <span>Formulas</span>
+          </button>
+          <button id="modeCardsBtn" class="sketch-btn px-2.5 py-1 font-hand text-xs font-bold bg-[#faf7f0] text-slate-700 flex items-center gap-1">
+            <i data-lucide="layers" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>Flashcards</span>
+          </button>
+          <button id="modeExamBtn" class="sketch-btn px-2.5 py-1 font-hand text-xs font-bold bg-[#faf7f0] text-slate-700 flex items-center gap-1">
+            <i data-lucide="target" class="w-3.5 h-3.5 text-rose-600"></i>
+            <span>Exam Sim</span>
+          </button>
+          <button id="modeCalcBtn" class="sketch-btn px-2.5 py-1 font-hand text-xs font-bold bg-[#faf7f0] text-slate-700 flex items-center gap-1">
+            <i data-lucide="calculator" class="w-3.5 h-3.5 text-indigo-600"></i>
+            <span>Calculators</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Main Viewer Area -->
+      <div class="flex-1 relative overflow-hidden bg-graph-paper">
+        
+        <!-- 1. Native Embedded PDF Viewer in Sketch Notebook Frame -->
+        <div id="pdfViewerWrapper" class="w-full h-full p-2 md:p-3 flex flex-col">
+          <div class="w-full h-full bg-white rounded-xl sketch-border sketch-shadow overflow-hidden relative">
+            <object
+              id="pdfViewerObject"
+              data=""
+              type="application/pdf"
+              class="w-full h-full"
+            >
+              <iframe
+                id="pdfViewerFrame"
+                src=""
+                class="w-full h-full border-none"
+              ></iframe>
+            </object>
+          </div>
+        </div>
+
+        <!-- 2. Markdown Reading View (Parchment Engineering Notebook) -->
+        <div id="mdViewerContainer" class="hidden absolute inset-0 overflow-y-auto bg-ruled-paper p-4 md:p-8 select-text">
+          <div class="max-w-4xl mx-auto bg-white rounded-xl sketch-border sketch-shadow p-5 md:p-8 notebook-left-margin relative">
+            
+            <!-- Floating Unit Navigator Chips -->
+            <div class="mb-6 pb-3 border-b-2 border-slate-900 flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-sketch font-bold text-xs uppercase tracking-wider text-slate-700">📖 Units:</span>
+                <button onclick="jumpToMarkdownHeading('unit-1')" class="sketch-btn px-2 py-0.5 bg-sky-100 font-hand text-xs font-bold">Unit 1</button>
+                <button onclick="jumpToMarkdownHeading('unit-2')" class="sketch-btn px-2 py-0.5 bg-sky-100 font-hand text-xs font-bold">Unit 2</button>
+                <button onclick="jumpToMarkdownHeading('unit-3')" class="sketch-btn px-2 py-0.5 bg-sky-100 font-hand text-xs font-bold">Unit 3</button>
+                <button onclick="jumpToMarkdownHeading('unit-4')" class="sketch-btn px-2 py-0.5 bg-sky-100 font-hand text-xs font-bold">Unit 4</button>
+                <button onclick="jumpToMarkdownHeading('unit-5')" class="sketch-btn px-2 py-0.5 bg-sky-100 font-hand text-xs font-bold">Unit 5</button>
+              </div>
+              <button id="copyMdTextBtn" class="sketch-btn px-2.5 py-1 bg-yellow-100 font-hand text-xs font-bold flex items-center gap-1">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span>Copy Notes</span>
+              </button>
+            </div>
+
+            <!-- Rendered Markdown with Math -->
+            <div id="mdViewerContent" class="prose-sketch leading-relaxed"></div>
+          </div>
+        </div>
+
+        <!-- 3. Image/Diagram Viewer in Sketch Frame -->
+        <div id="imageViewerContainer" class="hidden absolute inset-0 overflow-auto bg-graph-paper flex items-center justify-center p-4 md:p-6">
+          <div class="bg-white p-5 rounded-2xl sketch-border sketch-shadow-lg max-w-4xl washi-tape washi-tape-mint">
+            <div class="flex items-center justify-between mb-3 border-b-2 border-slate-900 pb-2">
+              <span id="imageViewerCaption" class="font-sketch text-base font-bold text-slate-900"></span>
+              <a id="imageDownloadBtn" href="" download class="sketch-btn px-3 py-1 bg-emerald-200 text-slate-900 font-hand text-xs font-bold flex items-center gap-1">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>Download High-Res Diagram</span>
+              </a>
+            </div>
+            <div class="flex items-center justify-center bg-slate-50 p-4 rounded-xl border-2 border-slate-900 border-dashed">
+              <img id="imageViewerImg" src="" alt="Diagram" class="max-w-full max-h-[70vh] object-contain rounded-lg" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Generative Exam Cheat Sheet & Formula Studio Mode -->
+        <div id="cheatSheetContainer" class="hidden absolute inset-0 overflow-y-auto bg-graph-paper p-4 md:p-6">
+          <div class="max-w-5xl mx-auto space-y-6">
+            
+            <!-- Header Card -->
+            <div class="bg-white p-5 rounded-2xl sketch-border sketch-shadow washi-tape washi-tape-yellow flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h2 class="font-sketch font-bold text-xl text-slate-900 flex items-center gap-2">
+                  <span>⚡ High-Yield Exam Formulas & Concept Studio</span>
+                  <span id="cheatSheetSubjectBadge" class="font-mono text-xs px-2 py-0.5 rounded bg-yellow-200 border border-slate-900">CSA</span>
+                </h2>
+                <p class="font-hand text-sm text-slate-600 mt-1">Directly extracted from NIT Jalandhar End-Sem Syllabus & Solved Papers</p>
+              </div>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <button onclick="renderFormulaCards('all')" class="formula-filter-btn sketch-btn px-3 py-1 bg-yellow-200 text-xs font-hand font-bold">All Units</button>
+                <button onclick="renderFormulaCards('Unit 1')" class="formula-filter-btn sketch-btn px-2.5 py-1 bg-white text-xs font-hand font-bold">Unit 1</button>
+                <button onclick="renderFormulaCards('Unit 2')" class="formula-filter-btn sketch-btn px-2.5 py-1 bg-white text-xs font-hand font-bold">Unit 2</button>
+                <button onclick="renderFormulaCards('Unit 3')" class="formula-filter-btn sketch-btn px-2.5 py-1 bg-white text-xs font-hand font-bold">Unit 3</button>
+                <button onclick="renderFormulaCards('Unit 4')" class="formula-filter-btn sketch-btn px-2.5 py-1 bg-white text-xs font-hand font-bold">Unit 4</button>
+                <button onclick="renderFormulaCards('Unit 5')" class="formula-filter-btn sketch-btn px-2.5 py-1 bg-white text-xs font-hand font-bold">Unit 5</button>
+              </div>
+            </div>
+
+            <!-- Formulas Grid -->
+            <div id="formulasGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Rendered dynamically -->
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 5. Active Recall Flashcards Studio Mode -->
+        <div id="flashcardsContainer" class="hidden absolute inset-0 overflow-y-auto bg-graph-paper p-4 md:p-6 flex flex-col items-center justify-center">
+          <div class="max-w-xl w-full space-y-4">
+            
+            <!-- Deck Progress & Score Header -->
+            <div class="bg-white p-3 rounded-xl sketch-border sketch-shadow flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="font-sketch text-sm font-bold text-slate-900">🃏 Active Recall Deck</span>
+                <span id="flashcardDeckSubject" class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-100 border border-slate-900 font-bold">01_CSA</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="font-hand text-sm font-bold text-slate-600">Card <span id="cardCounterText">1</span> of <span id="cardTotalText">5</span></span>
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-yellow-200 border border-slate-900 font-bold">★ <span id="masteredCount">0</span> Mastered</span>
+              </div>
+            </div>
+
+            <!-- 3D Interactive Flip Card -->
+            <div class="card-scene w-full h-84 md:h-80 cursor-pointer" id="activeFlashcardElement">
+              <div class="card-flipper w-full h-full relative" id="cardFlipper">
+                
+                <!-- FRONT: Question -->
+                <div class="card-front absolute inset-0 bg-[#ffffff] rounded-2xl sketch-border sketch-shadow-lg p-6 flex flex-col justify-between washi-tape washi-tape-sky">
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <span id="cardMarksBadge" class="font-mono text-xs px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-slate-900 font-bold">5 Marks End-Sem</span>
+                      <span id="cardFrequencyBadge" class="font-hand text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded border border-slate-900">Very High Frequency</span>
+                    </div>
+                    <div class="mt-4">
+                      <span class="font-sketch text-xs text-slate-400 uppercase tracking-widest block mb-1">Question / Exam Problem:</span>
+                      <h3 id="cardQuestionText" class="font-sketch font-bold text-lg text-slate-900 leading-snug">What is the difference between Spatial and Temporal Locality?</h3>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                    <span class="font-hand text-xs text-slate-500">💡 Click anywhere or press [Space] to flip answer</span>
+                    <button id="flipHintBtn" class="sketch-btn px-2.5 py-0.5 bg-yellow-100 font-hand text-xs font-bold">Flip Card ↻</button>
+                  </div>
+                </div>
+
+                <!-- BACK: Model Exam Answer -->
+                <div class="card-back absolute inset-0 bg-[#fef9c3] rounded-2xl sketch-border sketch-shadow-lg p-6 flex flex-col justify-between washi-tape washi-tape-mint overflow-y-auto">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="font-sketch text-xs font-bold text-emerald-800 uppercase tracking-wider bg-emerald-200 px-2 py-0.5 rounded border border-slate-900">✓ Model Solution</span>
+                      <span class="font-hand text-xs text-slate-600">Full Marks Key</span>
+                    </div>
+                    <div id="cardAnswerText" class="font-hand text-sm text-slate-900 leading-relaxed space-y-2 mt-2"></div>
+                  </div>
+                  <div class="flex items-center justify-between border-t-2 border-dashed border-slate-400 pt-3 mt-3">
+                    <span class="font-hand text-xs text-slate-600">Click to flip back</span>
+                    <button onclick="markCurrentCardMastered(event)" class="sketch-btn px-3 py-1 bg-emerald-300 text-slate-900 font-hand text-xs font-bold flex items-center gap-1">
+                      <span>Mark Mastered ✓</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Flashcard Controls -->
+            <div class="flex items-center justify-between gap-3 pt-2">
+              <button id="prevCardBtn" class="sketch-btn px-4 py-2 bg-white font-hand text-sm font-bold flex items-center gap-1">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                <span>Previous</span>
+              </button>
+              <button id="shuffleCardsBtn" class="sketch-btn px-3 py-2 bg-yellow-100 font-hand text-xs font-bold flex items-center gap-1">
+                <i data-lucide="shuffle" class="w-3.5 h-3.5"></i>
+                <span>Shuffle</span>
+              </button>
+              <button id="nextCardBtn" class="sketch-btn px-4 py-2 bg-white font-hand text-sm font-bold flex items-center gap-1">
+                <span>Next</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 6. Generative Exam Practice & Quiz Studio (NEW!) -->
+        <div id="examSimulatorContainer" class="hidden absolute inset-0 overflow-y-auto bg-graph-paper p-4 md:p-6">
+          <div class="max-w-4xl mx-auto space-y-5">
+            
+            <!-- Controls Card -->
+            <div class="bg-white p-5 rounded-2xl sketch-border sketch-shadow washi-tape washi-tape-rose flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h2 class="font-sketch font-bold text-xl text-slate-900 flex items-center gap-2">
+                  <span>🎯 NITJ End-Sem Exam Practice Studio</span>
+                  <span id="simSubjectBadge" class="font-mono text-xs px-2 py-0.5 rounded bg-rose-200 border border-slate-900 font-bold">CSA</span>
+                </h2>
+                <p class="font-hand text-sm text-slate-600 mt-1">Practice authentic 2-mark, 5-mark, and 10-mark questions with model mark schemes</p>
+              </div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <div class="flex items-center gap-1">
+                  <button onclick="setSimMarks(2)" id="simMark2Btn" class="sim-mark-btn sketch-btn px-2.5 py-1 text-xs font-hand font-bold bg-white">2 Marks</button>
+                  <button onclick="setSimMarks(5)" id="simMark5Btn" class="sim-mark-btn sketch-btn px-2.5 py-1 text-xs font-hand font-bold bg-yellow-200">5 Marks</button>
+                  <button onclick="setSimMarks(10)" id="simMark10Btn" class="sim-mark-btn sketch-btn px-2.5 py-1 text-xs font-hand font-bold bg-white">10 Marks</button>
+                </div>
+                <button id="generateExamBtn" onclick="generateNewExamProblem()" class="sketch-btn px-3 py-1.5 bg-emerald-200 hover:bg-emerald-300 font-hand text-xs font-bold flex items-center gap-1">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-800"></i>
+                  <span>New Problem</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Problem Card -->
+            <div class="bg-white p-6 rounded-2xl sketch-border sketch-shadow space-y-4 relative">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <span id="simMarksBadge" class="font-mono text-xs px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-slate-900 font-bold">5 Marks</span>
+                  <span id="simExamSource" class="font-hand text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-slate-900">NIT Jalandhar Dec 2025</span>
+                </div>
+                <span id="simScoreBadge" class="font-mono text-xs px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-slate-900 font-bold">⭐ Score: 0 pts</span>
+              </div>
+
+              <div>
+                <h3 id="simQuestionTitle" class="font-sketch font-bold text-lg text-slate-900 mb-2">Booth's Signed Multiplication Algorithm</h3>
+                <div id="simQuestionText" class="font-hand text-base text-slate-800 leading-relaxed bg-[#fdfbf7] p-4 rounded-xl border border-slate-300 select-text"></div>
+              </div>
+
+              <!-- Fold-out Hint Sticky Note -->
+              <div>
+                <button id="simHintToggleBtn" onclick="toggleSimHint()" class="sketch-btn px-3 py-1 bg-yellow-100 font-hand text-xs font-bold flex items-center gap-1">
+                  <span>💡 Need a Hint?</span>
+                </button>
+                <div id="simHintBox" class="hidden mt-2 p-3 bg-yellow-50 rounded-xl border-2 border-slate-900 border-dashed text-xs font-hand text-amber-900">
+                  <span class="font-bold">Hint:</span> <span id="simHintText"></span>
+                </div>
+              </div>
+
+              <!-- Student Thought / Scratch Space -->
+              <div class="pt-2">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-sketch text-xs text-slate-500 uppercase tracking-wider">Your Working / Scratch Notes:</span>
+                  <button onclick="document.getElementById('scratchpadDrawer').classList.remove('hidden');" class="sketch-btn px-2 py-0.5 bg-sky-100 font-hand text-[11px] font-bold">Open Canvas Pen ✏️</button>
+                </div>
+                <textarea id="simScratchText" rows="3" placeholder="Type key steps, equations, or scratch thoughts here before revealing answer..." class="w-full bg-[#fdfbf7] border-2 border-slate-900 rounded-xl p-3 text-xs font-mono text-slate-900 focus:outline-none focus:bg-white shadow-[1.5px_1.5px_0px_#18181b]"></textarea>
+              </div>
+
+              <!-- Reveal Solution & Marking Scheme -->
+              <div class="pt-2 flex items-center justify-between border-t-2 border-dashed border-slate-300">
+                <button id="simRevealSolutionBtn" onclick="toggleSimSolution()" class="sketch-btn px-4 py-2 bg-yellow-200 hover:bg-yellow-300 font-hand text-sm font-bold flex items-center gap-1.5">
+                  <i data-lucide="eye" class="w-4 h-4 text-amber-800"></i>
+                  <span>Reveal Model Solution & Marking Scheme</span>
+                </button>
+                <span class="font-hand text-xs text-slate-500">Self-evaluate against NITJ standards</span>
+              </div>
+
+              <!-- Model Solution Container -->
+              <div id="simSolutionContainer" class="hidden space-y-4 pt-3 border-t-2 border-slate-900">
+                <!-- Marking Scheme Breakdown -->
+                <div id="simMarkingSchemeBox" class="p-4 bg-sky-50 rounded-xl border-2 border-slate-900 washi-tape washi-tape-sky">
+                  <h4 class="font-sketch font-bold text-xs uppercase tracking-wider text-sky-900 mb-2 flex items-center gap-1">
+                    <span>📋 Official Marking Scheme Breakdown:</span>
+                  </h4>
+                  <ul id="simMarkingSchemeList" class="space-y-1 font-hand text-xs text-slate-800 list-disc list-inside"></ul>
+                </div>
+
+                <!-- Complete Model Solution -->
+                <div id="simModelAnswerBox" class="p-5 bg-[#fef9c3] rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_#18181b] select-text">
+                  <h4 class="font-sketch font-bold text-sm text-slate-900 mb-2">✓ Complete Model Answer:</h4>
+                  <div id="simModelAnswerText" class="prose-sketch text-sm leading-relaxed"></div>
+                </div>
+
+                <!-- Self-Grading Buttons -->
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-300 flex items-center justify-between flex-wrap gap-2">
+                  <span class="font-hand text-xs font-bold text-slate-700">How did you perform on this question?</span>
+                  <div class="flex items-center gap-2">
+                    <button onclick="gradeSimProblem('full')" class="sketch-btn px-3 py-1 bg-emerald-300 text-slate-900 font-hand text-xs font-bold">
+                      Full Marks (+50 XP) ✓
+                    </button>
+                    <button onclick="gradeSimProblem('partial')" class="sketch-btn px-3 py-1 bg-yellow-200 text-slate-900 font-hand text-xs font-bold">
+                      Partial (+25 XP)
+                    </button>
+                    <button onclick="gradeSimProblem('review')" class="sketch-btn px-3 py-1 bg-rose-200 text-slate-900 font-hand text-xs font-bold">
+                      Need Review (0 XP)
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 7. Interactive Sketch Formula & Parameter Calculators (NEW!) -->
+        <div id="calculatorsContainer" class="hidden absolute inset-0 overflow-y-auto bg-graph-paper p-4 md:p-6">
+          <div class="max-w-4xl mx-auto space-y-6">
+            
+            <div class="bg-white p-5 rounded-2xl sketch-border sketch-shadow washi-tape washi-tape-sky">
+              <h2 class="font-sketch font-bold text-xl text-slate-900 flex items-center gap-2">
+                <span>🧮 Interactive Formula & Parameter Visualizers</span>
+              </h2>
+              <p class="font-hand text-sm text-slate-600 mt-1">Play with exam formulas dynamically—adjust parameters and see instant mathematical feedback</p>
+            </div>
+
+            <!-- Calc 1: Amdahl's Law Speedup Visualizer -->
+            <div class="bg-white p-5 rounded-2xl sketch-border sketch-shadow space-y-4">
+              <div class="flex items-center justify-between border-b-2 border-slate-900 pb-2">
+                <div>
+                  <h3 class="font-sketch font-bold text-base text-slate-900">1. Amdahl's Law Speedup Visualizer</h3>
+                  <p class="font-mono text-xs text-slate-600">$$S = \frac{1}{(1 - f) + \frac{f}{k}}$$</p>
+                </div>
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-yellow-200 border border-slate-900 font-bold">01_CSA (Unit 1)</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-3">
+                  <div>
+                    <div class="flex justify-between font-hand text-xs font-bold text-slate-700">
+                      <span>Parallelizable Fraction ($f$):</span>
+                      <span id="amdahlFractionVal" class="font-mono text-indigo-700">80%</span>
+                    </div>
+                    <input id="amdahlFractionSlider" type="range" min="0" max="99" value="80" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer" oninput="updateAmdahlCalc()" />
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between font-hand text-xs font-bold text-slate-700">
+                      <span>Processor Cores / Factor ($k$):</span>
+                      <span id="amdahlFactorVal" class="font-mono text-indigo-700">4 cores</span>
+                    </div>
+                    <input id="amdahlFactorSlider" type="range" min="1" max="64" value="4" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer" oninput="updateAmdahlCalc()" />
+                  </div>
+                </div>
+
+                <div class="p-4 bg-yellow-50 rounded-xl border-2 border-slate-900 flex flex-col justify-between">
+                  <div>
+                    <span class="font-sketch text-xs text-slate-500 uppercase">Calculated Speedup:</span>
+                    <div class="flex items-baseline gap-2 mt-1">
+                      <span id="amdahlSpeedupOut" class="font-mono text-3xl font-bold text-slate-900">2.50x</span>
+                      <span class="font-hand text-xs text-slate-600">faster execution</span>
+                    </div>
+                    <p class="font-hand text-xs text-slate-600 mt-2">
+                      Theoretical Upper Bound ($k \to \infty$): <strong id="amdahlMaxBoundOut" class="font-mono text-slate-900">5.00x</strong>
+                    </p>
+                  </div>
+                  <!-- Visual Bar -->
+                  <div class="w-full bg-slate-200 h-4 rounded border border-slate-900 flex overflow-hidden mt-3">
+                    <div id="amdahlSerialBar" class="bg-rose-400 h-full text-[9px] font-mono text-white flex items-center justify-center" style="width: 20%;">20% Serial</div>
+                    <div id="amdahlParallelBar" class="bg-emerald-400 h-full text-[9px] font-mono text-slate-900 flex items-center justify-center" style="width: 80%;">80% Parallel</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Calc 2: Average Memory Access Time (AMAT) -->
+            <div class="bg-white p-5 rounded-2xl sketch-border sketch-shadow space-y-4">
+              <div class="flex items-center justify-between border-b-2 border-slate-900 pb-2">
+                <div>
+                  <h3 class="font-sketch font-bold text-base text-slate-900">2. Average Memory Access Time (AMAT)</h3>
+                  <p class="font-mono text-xs text-slate-600">$$T_{avg} = T_{hit} + (1 - h) \times M_{penalty}$$</p>
+                </div>
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-sky-200 border border-slate-900 font-bold">01_CSA (Unit 4)</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-3">
+                  <div>
+                    <div class="flex justify-between font-hand text-xs font-bold text-slate-700">
+                      <span>L1 Cache Hit Rate ($h$):</span>
+                      <span id="amatHitRateVal" class="font-mono text-indigo-700">95%</span>
+                    </div>
+                    <input id="amatHitRateSlider" type="range" min="70" max="99" value="95" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer" oninput="updateAmatCalc()" />
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between font-hand text-xs font-bold text-slate-700">
+                      <span>L1 Hit Time ($T_{hit}$):</span>
+                      <span id="amatHitTimeVal" class="font-mono text-indigo-700">1.0 ns</span>
+                    </div>
+                    <input id="amatHitTimeSlider" type="range" min="1" max="10" value="1" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer" oninput="updateAmatCalc()" />
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between font-hand text-xs font-bold text-slate-700">
+                      <span>Miss Penalty ($M_{penalty}$):</span>
+                      <span id="amatMissPenaltyVal" class="font-mono text-indigo-700">50 ns</span>
+                    </div>
+                    <input id="amatMissPenaltySlider" type="range" min="10" max="150" value="50" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer" oninput="updateAmatCalc()" />
+                  </div>
+                </div>
+
+                <div class="p-4 bg-sky-50 rounded-xl border-2 border-slate-900 flex flex-col justify-between">
+                  <div>
+                    <span class="font-sketch text-xs text-slate-500 uppercase">Effective Access Time (AMAT):</span>
+                    <div class="flex items-baseline gap-2 mt-1">
+                      <span id="amatAvgTimeOut" class="font-mono text-3xl font-bold text-slate-900">3.50 ns</span>
+                    </div>
+                    <div class="mt-2">
+                      <span id="amatStatusBadge" class="font-hand text-xs px-2 py-0.5 rounded bg-emerald-200 border border-slate-900 font-bold text-emerald-900">✓ Excellent Cache Hit Performance</span>
+                    </div>
+                  </div>
+                  <p class="font-hand text-xs text-slate-600 mt-3">
+                    NITJ Exam Rule: Every 1% drop in cache hit rate increases AMAT significantly due to high main memory penalty.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Calc 3: Pipelining Speedup & Efficiency -->
+            <div class="bg-white p-5 rounded-2xl sketch-border sketch-shadow space-y-4">
+              <div class="flex items-center justify-between border-b-2 border-slate-900 pb-2">
+                <div>
+                  <h3 class="font-sketch font-bold text-base text-slate-900">3. Pipelining Speedup & Efficiency</h3>
+                  <p class="font-mono text-xs text-slate-600">$$S = \frac{n \cdot k}{k + n - 1 + d}$$</p>
+                </div>
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-200 border border-slate-900 font-bold">01_CSA (Unit 5)</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-3">
+                  <div>
+                    <div class="flex justify-between font-hand text-xs font-bold text-slate-700">
+                      <span>Number of Instructions ($n$):</span>
+                      <span id="pipeInstructionsVal" class="font-mono text-indigo-700">1000</span>
+                    </div>
+                    <input id="pipeInstructionsSlider" type="range" min="10" max="5000" step="10" value="1000" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer" oninput="updatePipeCalc()" />
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between font-hand text-xs font-bold text-slate-700">
+                      <span>Pipeline Stages ($k$):</span>
+                      <span id="pipeStagesVal" class="font-mono text-indigo-700">5 stages</span>
+                    </div>
+                    <input id="pipeStagesSlider" type="range" min="2" max="12" value="5" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer" oninput="updatePipeCalc()" />
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between font-hand text-xs font-bold text-slate-700">
+                      <span>Hazard Stall Cycles ($d$):</span>
+                      <span id="pipeStallsVal" class="font-mono text-indigo-700">0 stalls</span>
+                    </div>
+                    <input id="pipeStallsSlider" type="range" min="0" max="100" value="0" class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer" oninput="updatePipeCalc()" />
+                  </div>
+                </div>
+
+                <div class="p-4 bg-emerald-50 rounded-xl border-2 border-slate-900 flex flex-col justify-between">
+                  <div>
+                    <span class="font-sketch text-xs text-slate-500 uppercase">Pipeline Speedup Factor:</span>
+                    <div class="flex items-baseline gap-2 mt-1">
+                      <span id="pipeSpeedupOut" class="font-mono text-3xl font-bold text-slate-900">4.98x</span>
+                      <span class="font-hand text-xs text-slate-600">(Max: 5.00x)</span>
+                    </div>
+                    <div class="mt-2">
+                      <span class="font-hand text-xs text-slate-700">Efficiency: <strong id="pipeEfficiencyOut" class="font-mono text-slate-900">99.6%</strong></span>
+                    </div>
+                  </div>
+                  <p class="font-hand text-xs text-slate-600 mt-3">
+                    As $n \gg k$, speedup asymptotically approaches the number of pipeline stages $k$.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 8. 5-Unit Syllabus & Exam Weightage Roadmap Modal/View -->
+        <div id="syllabusContainer" class="hidden absolute inset-0 overflow-y-auto bg-graph-paper p-4 md:p-6">
+          <div class="max-w-4xl mx-auto space-y-5">
+            <div class="bg-white p-5 rounded-2xl sketch-border sketch-shadow washi-tape washi-tape-sky flex items-center justify-between">
+              <div>
+                <h2 class="font-sketch font-bold text-xl text-slate-900 flex items-center gap-2">
+                  <span>📊 5-Unit Exam Syllabus & Weightage Roadmap</span>
+                  <span id="syllabusSubjectBadge" class="font-mono text-xs px-2 py-0.5 rounded bg-sky-200 border border-slate-900">CSA</span>
+                </h2>
+                <p class="font-hand text-sm text-slate-600 mt-1">High-Probability Questions & Mark Allocations from NIT Jalandhar End-Term Audit</p>
+              </div>
+              <button onclick="closeSyllabusView()" class="sketch-btn px-3 py-1 bg-white font-hand text-xs font-bold">
+                ✕ Back to Reader
+              </button>
+            </div>
+
+            <div id="unitsRoadmapList" class="space-y-4">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- ================= SLIDE-OUT DOODLE SCRATCHPAD CANVAS ================= -->
+  <div id="scratchpadDrawer" class="hidden fixed right-2 md:right-4 bottom-2 md:bottom-4 w-88 md:w-96 h-[32rem] bg-white rounded-2xl sketch-border sketch-shadow-lg z-50 flex flex-col overflow-hidden washi-tape washi-tape-yellow">
+    
+    <!-- Scratchpad Header -->
+    <div class="p-3 bg-[#faf7f0] border-b-2 border-slate-900 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-base">✏️</span>
+        <span class="font-sketch font-bold text-sm text-slate-900">Hand-Drawn Scratchpad</span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <button id="undoScratchBtn" title="Undo Last Stroke" class="sketch-btn p-1 bg-white text-slate-900">
+          <i data-lucide="undo-2" class="w-3.5 h-3.5"></i>
+        </button>
+        <button id="downloadScratchBtn" title="Download Drawing as PNG" class="sketch-btn p-1 bg-sky-100 text-slate-900">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+        </button>
+        <button id="clearScratchBtn" title="Clear Canvas" class="sketch-btn p-1 bg-rose-100 text-slate-900">
+          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+        </button>
+        <button id="closeScratchBtn" class="sketch-btn p-1 bg-white text-slate-900">
+          <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Drawing Brush Controls -->
+    <div class="px-3 py-1.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-wrap gap-1">
+      <div class="flex items-center gap-1">
+        <button data-color="#18181b" class="scratch-color-btn w-5 h-5 rounded-full bg-slate-900 border border-slate-900 ring-2 ring-slate-400"></button>
+        <button data-color="#ef4444" class="scratch-color-btn w-5 h-5 rounded-full bg-red-500 border border-slate-900"></button>
+        <button data-color="#3b82f6" class="scratch-color-btn w-5 h-5 rounded-full bg-blue-500 border border-slate-900"></button>
+        <button data-color="#10b981" class="scratch-color-btn w-5 h-5 rounded-full bg-emerald-500 border border-slate-900"></button>
+        <button data-color="#f59e0b" class="scratch-color-btn w-5 h-5 rounded-full bg-amber-400 border border-slate-900"></button>
+        <!-- Modes -->
+        <button id="highlighterBrushBtn" title="Highlighter Marker" class="sketch-btn px-1.5 py-0.5 bg-yellow-200 text-[10px] font-hand font-bold ml-1">
+          Marker
+        </button>
+        <button id="eraserBrushBtn" title="Eraser Tool" class="sketch-btn px-1.5 py-0.5 bg-white text-[10px] font-hand font-bold">
+          Eraser
+        </button>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <button data-size="2" class="scratch-size-btn sketch-btn px-1.5 py-0.5 bg-white text-[10px] font-mono font-bold">Fine</button>
+        <button data-size="5" class="scratch-size-btn sketch-btn px-1.5 py-0.5 bg-yellow-100 text-[10px] font-mono font-bold">Med</button>
+        <button data-size="12" class="scratch-size-btn sketch-btn px-1.5 py-0.5 bg-white text-[10px] font-mono font-bold">Bold</button>
+      </div>
+    </div>
+
+    <!-- Drawing Canvas -->
+    <div class="flex-1 bg-graph-paper relative cursor-crosshair overflow-hidden" id="scratchCanvasWrapper">
+      <canvas id="scratchCanvas" class="w-full h-full block touch-none"></canvas>
+    </div>
+
+  </div>
+
+
+  <!-- ================= POMODORO STUDY SPRINT MODAL ================= -->
+  <div id="pomodoroModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl sketch-border sketch-shadow-lg max-w-sm w-full p-6 washi-tape washi-tape-rose relative">
+      <button id="closePomodoroBtn" class="sketch-btn p-1 bg-white absolute top-3 right-3">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="text-center">
+        <div class="text-4xl mb-2">☕</div>
+        <h3 class="font-sketch font-bold text-xl text-slate-900">Study Sprint Timer</h3>
+        <p class="font-hand text-sm text-slate-600">Deep study sprints paired with hand-drawn rest breaks</p>
+
+        <!-- Sprint Presets -->
+        <div class="flex items-center justify-center gap-1.5 mt-3">
+          <button onclick="setPomodoroPreset(25, 5)" class="pomo-preset-btn sketch-btn px-2 py-0.5 text-xs font-hand font-bold bg-yellow-200">25 / 5 min</button>
+          <button onclick="setPomodoroPreset(50, 10)" class="pomo-preset-btn sketch-btn px-2 py-0.5 text-xs font-hand font-bold bg-white">50 / 10 min</button>
+          <button onclick="setPomodoroPreset(15, 3)" class="pomo-preset-btn sketch-btn px-2 py-0.5 text-xs font-hand font-bold bg-white">15 / 3 min</button>
+        </div>
+
+        <!-- Big Timer Dial -->
+        <div class="my-5 p-4 rounded-2xl bg-[#fdfbf7] sketch-border sketch-shadow inline-block">
+          <span id="modalTimerDisplay" class="font-mono text-5xl font-bold text-slate-900 tracking-tight">25:00</span>
+          <div class="flex items-center justify-center gap-2 mt-2">
+            <span id="pomodoroModeLabel" class="font-hand text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded border border-slate-900">Focus Mode</span>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-3">
+          <button id="startTimerBtn" class="sketch-btn px-5 py-2 bg-emerald-200 text-slate-900 font-hand text-base font-bold flex items-center gap-1.5">
+            <i data-lucide="play" class="w-4 h-4"></i>
+            <span>Start</span>
+          </button>
+          <button id="pauseTimerBtn" class="sketch-btn px-4 py-2 bg-yellow-100 text-slate-900 font-hand text-base font-bold flex items-center gap-1.5">
+            <i data-lucide="pause" class="w-4 h-4"></i>
+            <span>Pause</span>
+          </button>
+          <button id="resetTimerBtn" class="sketch-btn px-4 py-2 bg-slate-100 text-slate-900 font-hand text-base font-bold flex items-center gap-1.5">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>Reset</span>
+          </button>
+        </div>
+
+        <!-- Sprints Tally Counter -->
+        <div class="mt-6 pt-4 border-t-2 border-dashed border-slate-200 flex items-center justify-between">
+          <span class="font-hand text-sm font-bold text-slate-600">Sprints Completed Today:</span>
+          <span id="sprintTallyMarks" class="font-sketch font-bold text-lg text-emerald-700 tracking-widest">None yet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= LIVE FULL-TEXT SEARCH OVERLAY ================= -->
+  <div id="searchOverlay" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-40 flex items-start justify-center pt-20 px-4">
+    <div class="bg-white rounded-2xl sketch-border sketch-shadow-lg max-w-2xl w-full p-5 washi-tape washi-tape-yellow flex flex-col max-h-[75vh]">
+      
+      <div class="flex items-center justify-between border-b-2 border-slate-900 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🔍</span>
+          <span class="font-sketch font-bold text-base text-slate-900">Instant Search Results</span>
+          <span id="searchResultCount" class="font-mono text-xs px-2 py-0.5 rounded bg-yellow-200 border border-slate-900 font-bold">0 hits</span>
+        </div>
+        <button id="closeSearchOverlayBtn" class="sketch-btn p-1 bg-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div id="searchResultsList" class="flex-1 overflow-y-auto py-3 space-y-2.5">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="border-t-2 border-slate-900 pt-2 flex items-center justify-between text-xs font-hand text-slate-500">
+        <span>Click any match to jump directly in the reader</span>
+        <span>Press [Esc] to close</span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= CLIENT JAVASCRIPT ================= -->
+  <script>
+    // Global Application State
+    const appState = {
+      catalog: [],
+      studyData: {},
+      activeSubjectId: '01_CSA',
+      activeItem: null,
+      viewMode: 'pdf', // 'pdf' | 'md' | 'image' | 'cheatsheet' | 'flashcards' | 'examsim' | 'calculators' | 'syllabus'
+      
+      // Flashcard deck state
+      currentCardIndex: 0,
+      activeDeck: [],
+      masteredCards: new Set(JSON.parse(localStorage.getItem('nitj_mastered_cards') || '[]')),
+      
+      // Exam Simulator state
+      simMarks: 5,
+      currentSimQuestion: null,
+      simScore: parseInt(localStorage.getItem('nitj_sim_score') || '0', 10),
+      
+      // Pomodoro Timer State
+      pomodoroTimer: null,
+      pomodoroFocusDuration: 25 * 60,
+      pomodoroBreakDuration: 5 * 60,
+      pomodoroRemaining: 25 * 60,
+      pomodoroRunning: false,
+      pomodoroMode: 'focus', // 'focus' | 'break'
+      sprintsCompleted: parseInt(localStorage.getItem('nitj_sprints_completed') || '0', 10)
+    };
+
+    function refreshIcons() {
+      lucide.createIcons();
+    }
+
+    // Markdown KaTeX Protection Helpers
+    const mathTokens = [];
+    function protectMathInMarkdown(text) {
+      mathTokens.length = 0;
+      // 1. Protect display math $$...$$
+      let protectedText = text.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
+        mathTokens.push(match);
+        return `<!--MATH_BLOCK_${mathTokens.length - 1}-->`;
+      });
+      // 2. Protect inline math $...$
+      protectedText = protectedText.replace(/(^|[^\$])\$([^\$\n]+?)\$(?!\$)/g, (match, prefix, mathContent) => {
+        mathTokens.push(`$${mathContent}$`);
+        return `${prefix}<!--MATH_INLINE_${mathTokens.length - 1}-->`;
+      });
+      return protectedText;
+    }
+
+    function restoreMathInHtml(html) {
+      return html.replace(/<!--MATH_(?:BLOCK|INLINE)_(\d+)-->/g, (match, idx) => {
+        return mathTokens[parseInt(idx, 10)] || match;
+      });
+    }
+
+    marked.setOptions({
+      breaks: true,
+      gfm: true
+    });
+
+    function renderMath(container) {
+      if (window.renderMathInElement) {
+        renderMathInElement(container, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    // Gentle Acoustic Chime Synthesizer using pure Web Audio API (Zero external assets)
+    function playAcousticChime() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        
+        function note(freq, start, duration) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+          gain.gain.setValueAtTime(0.001, ctx.currentTime + start);
+          gain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + start + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + start);
+          osc.stop(ctx.currentTime + start + duration);
+        }
+
+        note(659.25, 0.0, 0.9); // E5
+        note(880.00, 0.2, 1.2); // A5
+        note(1318.51, 0.4, 1.6); // E6
+      } catch (err) {
+        // Audio synthesis fallback
+      }
+    }
+
+    // ================= INITIAL LOAD =================
+    async function initApp() {
+      try {
+        // Load Catalog
+        const catRes = await fetch('/api/catalog');
+        const catData = await catRes.json();
+        appState.catalog = catData.catalog;
+
+        // Load Academic Study Data
+        const studyRes = await fetch('/api/study_data');
+        const studyJson = await studyRes.json();
+        appState.studyData = studyJson.study_data;
+
+        initSubjectTabs();
+        selectSubject(appState.activeSubjectId);
+        initScratchpad();
+        initPomodoro();
+        initCalculators();
+        initKeyboardShortcuts();
+        initMobileSidebar();
+        updateTallyMarks();
+        refreshIcons();
+      } catch (err) {
+        console.error('Failed to initialize Study Kit:', err);
+      }
+    }
+
+    // ================= MOBILE SIDEBAR =================
+    function initMobileSidebar() {
+      const toggleBtn = document.getElementById('mobileSidebarToggleBtn');
+      const sidebar = document.getElementById('mainSidebar');
+      const backdrop = document.getElementById('mobileSidebarBackdrop');
+
+      function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      }
+
+      function closeSidebar() {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          if (sidebar.classList.contains('-translate-x-full')) {
+            openSidebar();
+          } else {
+            closeSidebar();
+          }
+        });
+      }
+
+      if (backdrop) {
+        backdrop.addEventListener('click', closeSidebar);
+      }
+    }
+
+    // ================= SUBJECT NAVIGATION =================
+    function initSubjectTabs() {
+      document.querySelectorAll('.subj-tab-sketch').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const subjId = tab.dataset.subject;
+          switchSubjectTabUI(subjId);
+          selectSubject(subjId);
+        });
+      });
+    }
+
+    function switchSubjectTabUI(subjId) {
+      document.querySelectorAll('.subj-tab-sketch').forEach(t => {
+        t.className = 'subj-tab-sketch px-3.5 py-1.5 font-sketch text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 flex items-center gap-1.5 shrink-0';
+      });
+      
+      const colors = {
+        '01_CSA': 'bg-[#bae6fd]',
+        '02_DBMS': 'bg-[#a7f3d0]',
+        '03_DSA': 'bg-[#fed7aa]',
+        '04_DSS': 'bg-[#e9d5ff]',
+        '05_OOPS': 'bg-[#fecdd3]',
+        '06_WT': 'bg-[#fef08a]'
+      };
+      
+      const activeTab = document.querySelector(`.subj-tab-sketch[data-subject="${subjId}"]`);
+      if (activeTab) {
+        activeTab.className = `subj-tab-sketch active px-3.5 py-1.5 font-sketch text-xs font-bold ${colors[subjId] || 'bg-yellow-200'} text-slate-900 flex items-center gap-1.5 shrink-0`;
+      }
+    }
+
+    function selectSubject(subjId) {
+      appState.activeSubjectId = subjId;
+      const subj = appState.catalog.find(s => s.id === subjId);
+      const study = appState.studyData[subjId];
+      if (!subj) return;
+
+      switchSubjectTabUI(subjId);
+
+      // Update Sidebar Subject Info
+      document.getElementById('activeSubjectName').textContent = subj.name;
+      document.getElementById('activeSubjectCode').textContent = subj.code;
+      if (study) {
+        document.getElementById('activeSubjectTagline').textContent = study.tagline || subj.description;
+      }
+
+      let totalDocs = 0;
+      for (const key in subj.sections) {
+        totalDocs += subj.sections[key].length;
+      }
+      document.getElementById('activeSubjectCount').textContent = `${totalDocs} Docs Available`;
+
+      const avatars = {
+        '01_CSA': '📐',
+        '02_DBMS': '🗄️',
+        '03_DSA': '⚡',
+        '04_DSS': '🔢',
+        '05_OOPS': '💻',
+        '06_WT': '🌐'
+      };
+      document.getElementById('subjectAvatarBadge').textContent = avatars[subjId] || '📚';
+
+      // Load Flashcard Deck for Subject
+      if (study && study.flashcards) {
+        appState.activeDeck = [...study.flashcards];
+        appState.currentCardIndex = 0;
+        updateFlashcardUI();
+      }
+
+      // Render Sidebar Documents
+      renderSidebarList(subj);
+
+      // Default Open: Theory Master Book or first Solved PYQ
+      if (subj.sections.theory && subj.sections.theory.length > 0) {
+        openDocument(subj.sections.theory[0]);
+      } else if (subj.sections.pyqs_solved && subj.sections.pyqs_solved.length > 0) {
+        openDocument(subj.sections.pyqs_solved[0]);
+      }
+    }
+
+    // ================= SIDEBAR DOCUMENT GROUPS =================
+    function renderSidebarList(subj, filterText = '') {
+      const container = document.getElementById('sidebarDocList');
+      container.innerHTML = '';
+      const query = (filterText || '').toLowerCase();
+
+      function addSection(title, badgeColor, icon, items) {
+        if (!items || items.length === 0) return;
+        const filtered = items.filter(it => it.title.toLowerCase().includes(query));
+        if (filtered.length === 0) return;
+
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'space-y-1.5';
+
+        sectionEl.innerHTML = `
+          <div class="flex items-center justify-between px-1">
+            <span class="font-sketch text-xs font-bold text-slate-700 flex items-center gap-1.5">
+              <span>${icon}</span>
+              <span>${title}</span>
+            </span>
+            <span class="font-mono text-[10px] px-1.5 py-0.2 rounded ${badgeColor} border border-slate-900 font-bold">${filtered.length}</span>
+          </div>
+          <div class="space-y-1.5 doc-items-box"></div>
+        `;
+
+        const box = sectionEl.querySelector('.doc-items-box');
+
+        filtered.forEach(it => {
+          const isSelected = appState.activeItem && appState.activeItem.rel_path === it.rel_path;
+          const card = document.createElement('div');
+          
+          card.className = `p-2.5 rounded-xl border-2 text-left cursor-pointer transition-all flex items-start gap-2.5 ${
+            isSelected
+              ? 'bg-yellow-100 border-slate-900 shadow-[2px_2px_0px_#18181b] translate-x-1'
+              : 'bg-white border-slate-800 hover:border-slate-900 hover:bg-slate-50 shadow-[1.5px_1.5px_0px_#18181b]'
+          }`;
+
+          const iconType = it.type === 'pdf' ? 'file-text' : it.type === 'image' ? 'image' : 'code';
+          const iconColor = it.type === 'pdf' ? 'text-rose-600' : it.type === 'image' ? 'text-purple-600' : 'text-blue-600';
+
+          card.innerHTML = `
+            <i data-lucide="${iconType}" class="w-4 h-4 ${iconColor} shrink-0 mt-0.5"></i>
+            <div class="flex-1 min-w-0">
+              <span class="font-sketch text-xs font-bold text-slate-900 line-clamp-2 block leading-snug">${it.title}</span>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-[10px] text-slate-500 font-mono">${it.size || ''}</span>
+                ${it.has_md ? '<span class="text-[9px] font-mono px-1 bg-sky-100 text-sky-800 rounded border border-slate-800 font-bold">PDF+Notes</span>' : ''}
+              </div>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            openDocument(it);
+          });
+
+          box.appendChild(card);
+        });
+
+        container.appendChild(sectionEl);
+      }
+
+      // Add groups with sketch headers
+      addSection('Master Theory Book', 'bg-blue-100 text-blue-900', '📘', subj.sections.theory);
+      addSection('Solved PYQs (2019–2024)', 'bg-emerald-100 text-emerald-900', '📝', subj.sections.pyqs_solved);
+      addSection('Official NITJ Exam Papers', 'bg-amber-100 text-amber-900', '📄', subj.sections.pyqs_official);
+      addSection('Official Syllabus & Scheme', 'bg-sky-100 text-sky-900', '📋', subj.sections.syllabus);
+      addSection('Lab Guides & Assignments', 'bg-teal-100 text-teal-900', '🧪', subj.sections.labs);
+      addSection('Engineering Diagrams', 'bg-purple-100 text-purple-900', '🖼️', subj.sections.diagrams);
+      addSection('Reference Textbooks & Drive', 'bg-slate-100 text-slate-800', '📚', subj.sections.references);
+
+      refreshIcons();
+    }
+
+    // ================= DOCUMENT VIEWER =================
+    async function openDocument(item) {
+      if (!item) return;
+      appState.activeItem = item;
+
+      // Update sidebar active highlights
+      const subj = appState.catalog.find(s => s.id === appState.activeSubjectId);
+      if (subj) renderSidebarList(subj);
+
+      // Update viewer header
+      document.getElementById('viewerTitle').textContent = item.title;
+      document.getElementById('viewerFileSize').textContent = item.size ? `(${item.size})` : '';
+
+      const typeBadge = document.getElementById('viewerTypeBadge');
+
+      hideAllViewerModes();
+
+      if (item.type === 'pdf') {
+        typeBadge.className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-rose-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+        typeBadge.textContent = 'PDF';
+
+        if (appState.viewMode === 'md' && item.has_md && item.md_path) {
+          showMarkdown(item.md_path);
+        } else {
+          showPdf(item.rel_path);
+        }
+
+      } else if (item.type === 'image') {
+        typeBadge.className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-purple-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+        typeBadge.textContent = 'Diagram';
+        showImage(item);
+
+      } else {
+        // Markdown
+        typeBadge.className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-sky-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+        typeBadge.textContent = 'Markdown';
+        showMarkdown(item.rel_path);
+      }
+    }
+
+    function hideAllViewerModes() {
+      document.getElementById('pdfViewerWrapper').classList.add('hidden');
+      document.getElementById('mdViewerContainer').classList.add('hidden');
+      document.getElementById('imageViewerContainer').classList.add('hidden');
+      document.getElementById('cheatSheetContainer').classList.add('hidden');
+      document.getElementById('flashcardsContainer').classList.add('hidden');
+      document.getElementById('examSimulatorContainer').classList.add('hidden');
+      document.getElementById('calculatorsContainer').classList.add('hidden');
+      document.getElementById('syllabusContainer').classList.add('hidden');
+    }
+
+    function showPdf(relPath) {
+      hideAllViewerModes();
+      const wrapper = document.getElementById('pdfViewerWrapper');
+      const pdfObject = document.getElementById('pdfViewerObject');
+      const pdfFrame = document.getElementById('pdfViewerFrame');
+
+      wrapper.classList.remove('hidden');
+
+      const fullUrl = `/api/pdf?path=${encodeURIComponent(relPath)}#toolbar=1&navpanes=1&statusbar=1`;
+      pdfObject.data = fullUrl;
+      pdfFrame.src = fullUrl;
+
+      setModeButtonActive('modePdfBtn');
+      appState.viewMode = 'pdf';
+    }
+
+    async function showMarkdown(relPath, targetHeading = null) {
+      hideAllViewerModes();
+      const mdContainer = document.getElementById('mdViewerContainer');
+      mdContainer.classList.remove('hidden');
+
+      const contentBox = document.getElementById('mdViewerContent');
+      contentBox.innerHTML = '<div class="text-slate-500 font-hand text-base py-12 text-center">⏳ Unrolling handwritten notes...</div>';
+
+      try {
+        const res = await fetch(`/api/md?path=${encodeURIComponent(relPath)}`);
+        const data = await res.json();
+        
+        // Protect math tokens before marked.parse to avoid underscores becoming italics
+        const protectedMd = protectMathInMarkdown(data.content);
+        const parsedHtml = marked.parse(protectedMd);
+        const finalHtml = restoreMathInHtml(parsedHtml);
+
+        contentBox.innerHTML = finalHtml;
+        renderMath(contentBox);
+
+        if (targetHeading) {
+          setTimeout(() => {
+            jumpToMarkdownHeading(targetHeading);
+          }, 250);
+        }
+      } catch (err) {
+        contentBox.textContent = 'Failed to load markdown content.';
+      }
+
+      setModeButtonActive('modeMdBtn');
+      appState.viewMode = 'md';
+      document.getElementById('viewerTypeBadge').textContent = 'Notes';
+      document.getElementById('viewerTypeBadge').className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-sky-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+    }
+
+    function showImage(item) {
+      hideAllViewerModes();
+      const imgContainer = document.getElementById('imageViewerContainer');
+      imgContainer.classList.remove('hidden');
+
+      const imgUrl = `/api/image?path=${encodeURIComponent(item.rel_path)}`;
+      document.getElementById('imageViewerImg').src = imgUrl;
+      document.getElementById('imageViewerCaption').textContent = item.title;
+      document.getElementById('imageDownloadBtn').href = `/api/download?path=${encodeURIComponent(item.rel_path)}`;
+      refreshIcons();
+    }
+
+    function setModeButtonActive(btnId) {
+      ['modePdfBtn', 'modeMdBtn', 'modeCheatBtn', 'modeCardsBtn', 'modeExamBtn', 'modeCalcBtn'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          if (id === btnId) {
+            btn.className = 'sketch-btn px-2.5 py-1 font-hand text-xs font-bold bg-yellow-200 text-slate-900 flex items-center gap-1 shadow-[2px_2px_0px_#18181b]';
+          } else {
+            btn.className = 'sketch-btn px-2.5 py-1 font-hand text-xs font-bold bg-[#faf7f0] text-slate-700 flex items-center gap-1';
+          }
+        }
+      });
+    }
+
+    // ================= GENERATIVE CHEAT SHEET & FORMULA STUDIO =================
+    function showCheatSheet() {
+      hideAllViewerModes();
+      document.getElementById('cheatSheetContainer').classList.remove('hidden');
+      setModeButtonActive('modeCheatBtn');
+      appState.viewMode = 'cheatsheet';
+
+      const study = appState.studyData[appState.activeSubjectId];
+      if (!study) return;
+
+      document.getElementById('cheatSheetSubjectBadge').textContent = study.short;
+      document.getElementById('viewerTitle').textContent = `High-Yield Formulas & Cheat Sheet: ${study.name}`;
+      document.getElementById('viewerFileSize').textContent = `(${study.formulas.length} formulas)`;
+      document.getElementById('viewerTypeBadge').textContent = 'Formulas';
+      document.getElementById('viewerTypeBadge').className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-amber-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+
+      renderFormulaCards('all');
+    }
+
+    function renderFormulaCards(filterUnit = 'all') {
+      const study = appState.studyData[appState.activeSubjectId];
+      if (!study || !study.formulas) return;
+
+      const container = document.getElementById('formulasGrid');
+      container.innerHTML = '';
+
+      const formulas = filterUnit === 'all' 
+        ? study.formulas 
+        : study.formulas.filter(f => f.unit === filterUnit);
+
+      formulas.forEach((item, idx) => {
+        const card = document.createElement('div');
+        const accents = ['washi-tape-yellow', 'washi-tape-mint', 'washi-tape-sky', 'washi-tape-rose'];
+        const tapeClass = accents[idx % accents.length];
+
+        card.className = `bg-white p-5 rounded-2xl sketch-border sketch-shadow washi-tape ${tapeClass} flex flex-col justify-between formula-card-item`;
+        card.dataset.title = item.title;
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-sketch font-bold text-sm text-slate-900">${item.title}</span>
+              <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-slate-100 border border-slate-900 font-bold">${item.unit}</span>
+            </div>
+            
+            <div class="my-3 p-3 bg-yellow-50 rounded-xl border-2 border-slate-900 border-dashed text-center">
+              <div class="formula-math font-mono text-base font-bold text-slate-900">$$${item.latex}$$</div>
+            </div>
+
+            <p class="font-hand text-xs text-slate-700 leading-relaxed mb-2">${item.explanation}</p>
+
+            ${item.trap ? `
+              <div class="p-2 bg-rose-50 rounded-lg border border-rose-300 text-[11px] font-hand text-rose-800 mb-2">
+                <span class="font-bold">⚠️ Exam Trap:</span> ${item.trap}
+              </div>
+            ` : ''}
+
+            ${item.example ? `
+              <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[11px] font-mono text-slate-700">
+                <span class="font-bold text-slate-900">Solved Ex:</span> ${item.example}
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
+            <button class="copy-latex-btn sketch-btn px-2.5 py-1 bg-yellow-100 font-hand text-xs font-bold flex items-center gap-1" data-latex="${encodeURIComponent(item.latex)}">
+              <i data-lucide="copy" class="w-3 h-3"></i>
+              <span>Copy LaTeX</span>
+            </button>
+            <span class="font-hand text-xs text-emerald-700 font-bold">★ High Yield</span>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      // Bind copy buttons safely without raw string interpolation
+      container.querySelectorAll('.copy-latex-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const latex = decodeURIComponent(btn.dataset.latex);
+          navigator.clipboard.writeText(latex);
+          const original = btn.innerHTML;
+          btn.innerHTML = '<span>Copied! ✓</span>';
+          setTimeout(() => { btn.innerHTML = original; refreshIcons(); }, 1200);
+        });
+      });
+
+      renderMath(container);
+      refreshIcons();
+    }
+
+    // ================= ACTIVE RECALL FLASHCARDS =================
+    function showFlashcards() {
+      hideAllViewerModes();
+      document.getElementById('flashcardsContainer').classList.remove('hidden');
+      setModeButtonActive('modeCardsBtn');
+      appState.viewMode = 'flashcards';
+
+      const study = appState.studyData[appState.activeSubjectId];
+      if (study && study.flashcards) {
+        appState.activeDeck = [...study.flashcards];
+        appState.currentCardIndex = 0;
+        document.getElementById('viewerTitle').textContent = `Active Recall Flashcards: ${study.name}`;
+        document.getElementById('viewerFileSize').textContent = `(${appState.activeDeck.length} cards)`;
+        document.getElementById('viewerTypeBadge').textContent = 'Flashcards';
+        document.getElementById('viewerTypeBadge').className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-emerald-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+        updateFlashcardUI();
+      }
+    }
+
+    function updateFlashcardUI() {
+      if (!appState.activeDeck || appState.activeDeck.length === 0) return;
+
+      const card = appState.activeDeck[appState.currentCardIndex];
+      const flipper = document.getElementById('cardFlipper');
+      flipper.classList.remove('flipped');
+
+      document.getElementById('flashcardDeckSubject').textContent = appState.activeSubjectId;
+      document.getElementById('cardCounterText').textContent = appState.currentCardIndex + 1;
+      document.getElementById('cardTotalText').textContent = appState.activeDeck.length;
+      document.getElementById('masteredCount').textContent = appState.masteredCards.size;
+
+      document.getElementById('cardMarksBadge').textContent = card.marks || '5 Marks';
+      document.getElementById('cardFrequencyBadge').textContent = card.frequency || 'High Yield';
+      document.getElementById('cardQuestionText').textContent = card.q;
+
+      const answerEl = document.getElementById('cardAnswerText');
+      answerEl.innerHTML = marked.parse(card.a);
+      renderMath(answerEl);
+      refreshIcons();
+    }
+
+    function flipActiveCard() {
+      const flipper = document.getElementById('cardFlipper');
+      flipper.classList.toggle('flipped');
+    }
+
+    function nextFlashcard() {
+      if (appState.currentCardIndex < appState.activeDeck.length - 1) {
+        appState.currentCardIndex++;
+      } else {
+        appState.currentCardIndex = 0;
+      }
+      updateFlashcardUI();
+    }
+
+    function prevFlashcard() {
+      if (appState.currentCardIndex > 0) {
+        appState.currentCardIndex--;
+      } else {
+        appState.currentCardIndex = appState.activeDeck.length - 1;
+      }
+      updateFlashcardUI();
+    }
+
+    function shuffleFlashcards() {
+      appState.activeDeck.sort(() => Math.random() - 0.5);
+      appState.currentCardIndex = 0;
+      updateFlashcardUI();
+    }
+
+    function markCurrentCardMastered(e) {
+      if (e) e.stopPropagation();
+      appState.masteredCards.add(`${appState.activeSubjectId}_${appState.currentCardIndex}`);
+      localStorage.setItem('nitj_mastered_cards', JSON.stringify(Array.from(appState.masteredCards)));
+      document.getElementById('masteredCount').textContent = appState.masteredCards.size;
+      
+      // Confetti burst for mastery celebration!
+      if (window.confetti) {
+        confetti({
+          particleCount: 45,
+          spread: 60,
+          origin: { y: 0.6 }
+        });
+      }
+      setTimeout(nextFlashcard, 600);
+    }
+
+    // ================= GENERATIVE EXAM SIMULATOR & PRACTICE STUDIO =================
+    function showExamPractice(specificQId = null) {
+      hideAllViewerModes();
+      document.getElementById('examSimulatorContainer').classList.remove('hidden');
+      setModeButtonActive('modeExamBtn');
+      appState.viewMode = 'examsim';
+
+      const study = appState.studyData[appState.activeSubjectId];
+      if (!study) return;
+
+      document.getElementById('simSubjectBadge').textContent = study.short;
+      document.getElementById('viewerTitle').textContent = `NITJ Exam Practice Studio: ${study.name}`;
+      document.getElementById('viewerFileSize').textContent = `(Authentic PYQs)`;
+      document.getElementById('viewerTypeBadge').textContent = 'Exam Sim';
+      document.getElementById('viewerTypeBadge').className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-rose-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+      document.getElementById('simScoreBadge').textContent = `⭐ Score: ${appState.simScore} pts`;
+
+      generateNewExamProblem(specificQId);
+    }
+
+    function setSimMarks(marks) {
+      appState.simMarks = marks;
+      document.querySelectorAll('.sim-mark-btn').forEach(btn => {
+        btn.className = 'sim-mark-btn sketch-btn px-2.5 py-1 text-xs font-hand font-bold bg-white';
+      });
+      const activeBtn = document.getElementById(`simMark${marks}Btn`);
+      if (activeBtn) activeBtn.className = 'sim-mark-btn sketch-btn px-2.5 py-1 text-xs font-hand font-bold bg-yellow-200';
+      generateNewExamProblem();
+    }
+
+    async function generateNewExamProblem(specificQId = null) {
+      try {
+        let url = `/api/exam_question?subject=${appState.activeSubjectId}&marks=${appState.simMarks}`;
+        if (specificQId) {
+          url = `/api/exam_question?q_id=${specificQId}`;
+        }
+        const res = await fetch(url);
+        const data = await res.json();
+        const q = data.question;
+        appState.currentSimQuestion = q;
+
+        // Reset UI state
+        document.getElementById('simMarksBadge').textContent = `${q.marks} Marks`;
+        document.getElementById('simExamSource').textContent = q.exam_source || 'NIT Jalandhar End-Sem';
+        document.getElementById('simQuestionTitle').textContent = q.title;
+        document.getElementById('simQuestionText').textContent = q.question;
+        document.getElementById('simHintText').textContent = q.hint || 'Carefully recall formulas and step-by-step algorithms.';
+        document.getElementById('simScratchText').value = '';
+
+        document.getElementById('simHintBox').classList.add('hidden');
+        document.getElementById('simSolutionContainer').classList.add('hidden');
+
+        // Populate marking scheme
+        const schemeList = document.getElementById('simMarkingSchemeList');
+        schemeList.innerHTML = '';
+        if (q.marking_scheme && Array.isArray(q.marking_scheme)) {
+          q.marking_scheme.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            schemeList.appendChild(li);
+          });
+        }
+
+        // Populate model answer
+        const modelBox = document.getElementById('simModelAnswerText');
+        const protectedAns = protectMathInMarkdown(q.model_answer);
+        modelBox.innerHTML = restoreMathInHtml(marked.parse(protectedAns));
+        renderMath(modelBox);
+        refreshIcons();
+      } catch (err) {
+        console.error('Failed to load exam problem:', err);
+      }
+    }
+
+    function toggleSimHint() {
+      const hintBox = document.getElementById('simHintBox');
+      hintBox.classList.toggle('hidden');
+    }
+
+    function toggleSimSolution() {
+      const solContainer = document.getElementById('simSolutionContainer');
+      solContainer.classList.toggle('hidden');
+      if (!solContainer.classList.contains('hidden')) {
+        renderMath(solContainer);
+      }
+    }
+
+    function gradeSimProblem(grade) {
+      let addPts = 0;
+      if (grade === 'full') addPts = 50;
+      else if (grade === 'partial') addPts = 25;
+      
+      appState.simScore += addPts;
+      localStorage.setItem('nitj_sim_score', String(appState.simScore));
+      document.getElementById('simScoreBadge').textContent = `⭐ Score: ${appState.simScore} pts`;
+
+      if (grade === 'full' && window.confetti) {
+        confetti({
+          particleCount: 50,
+          spread: 70,
+          origin: { y: 0.7 }
+        });
+      }
+
+      playAcousticChime();
+      alert(`Graded! +${addPts} points added to your score.`);
+    }
+
+    // ================= INTERACTIVE FORMULA CALCULATORS =================
+    function showCalculators() {
+      hideAllViewerModes();
+      document.getElementById('calculatorsContainer').classList.remove('hidden');
+      setModeButtonActive('modeCalcBtn');
+      appState.viewMode = 'calculators';
+
+      const study = appState.studyData[appState.activeSubjectId];
+      if (study) {
+        document.getElementById('viewerTitle').textContent = `Interactive Formula Visualizers: ${study.name}`;
+      }
+      document.getElementById('viewerFileSize').textContent = `(Live Math)`;
+      document.getElementById('viewerTypeBadge').textContent = 'Calculators';
+      document.getElementById('viewerTypeBadge').className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-indigo-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+
+      updateAmdahlCalc();
+      updateAmatCalc();
+      updatePipeCalc();
+      renderMath(document.getElementById('calculatorsContainer'));
+    }
+
+    function initCalculators() {
+      updateAmdahlCalc();
+      updateAmatCalc();
+      updatePipeCalc();
+    }
+
+    function updateAmdahlCalc() {
+      const f = parseInt(document.getElementById('amdahlFractionSlider').value, 10) / 100;
+      const k = parseInt(document.getElementById('amdahlFactorSlider').value, 10);
+
+      document.getElementById('amdahlFractionVal').textContent = `${Math.round(f * 100)}%`;
+      document.getElementById('amdahlFactorVal').textContent = `${k} ${k === 1 ? 'core' : 'cores'}`;
+
+      const speedup = 1 / ((1 - f) + (f / k));
+      const maxBound = 1 / (1 - f);
+
+      document.getElementById('amdahlSpeedupOut').textContent = `${speedup.toFixed(2)}x`;
+      document.getElementById('amdahlMaxBoundOut').textContent = `${maxBound.toFixed(2)}x`;
+
+      const serialPct = Math.round((1 - f) * 100);
+      const parallelPct = 100 - serialPct;
+      document.getElementById('amdahlSerialBar').style.width = `${serialPct}%`;
+      document.getElementById('amdahlSerialBar').textContent = `${serialPct}% Serial`;
+      document.getElementById('amdahlParallelBar').style.width = `${parallelPct}%`;
+      document.getElementById('amdahlParallelBar').textContent = `${parallelPct}% Parallel`;
+    }
+
+    function updateAmatCalc() {
+      const h = parseInt(document.getElementById('amatHitRateSlider').value, 10) / 100;
+      const tHit = parseFloat(document.getElementById('amatHitTimeSlider').value);
+      const penalty = parseFloat(document.getElementById('amatMissPenaltySlider').value);
+
+      document.getElementById('amatHitRateVal').textContent = `${Math.round(h * 100)}%`;
+      document.getElementById('amatHitTimeVal').textContent = `${tHit.toFixed(1)} ns`;
+      document.getElementById('amatMissPenaltyVal').textContent = `${penalty} ns`;
+
+      const amat = tHit + (1 - h) * penalty;
+      document.getElementById('amatAvgTimeOut').textContent = `${amat.toFixed(2)} ns`;
+
+      const badge = document.getElementById('amatStatusBadge');
+      if (amat <= 3.5) {
+        badge.className = 'font-hand text-xs px-2 py-0.5 rounded bg-emerald-200 border border-slate-900 font-bold text-emerald-900';
+        badge.textContent = '✓ Excellent Cache Hit Performance';
+      } else if (amat <= 6.0) {
+        badge.className = 'font-hand text-xs px-2 py-0.5 rounded bg-yellow-200 border border-slate-900 font-bold text-yellow-900';
+        badge.textContent = '⚠️ Acceptable Memory Latency';
+      } else {
+        badge.className = 'font-hand text-xs px-2 py-0.5 rounded bg-rose-200 border border-slate-900 font-bold text-rose-900';
+        badge.textContent = '❌ Severe Bottleneck — Miss Rate Penalizing CPU';
+      }
+    }
+
+    function updatePipeCalc() {
+      const n = parseInt(document.getElementById('pipeInstructionsSlider').value, 10);
+      const k = parseInt(document.getElementById('pipeStagesSlider').value, 10);
+      const d = parseInt(document.getElementById('pipeStallsSlider').value, 10);
+
+      document.getElementById('pipeInstructionsVal').textContent = `${n} instructions`;
+      document.getElementById('pipeStagesVal').textContent = `${k} stages`;
+      document.getElementById('pipeStallsVal').textContent = `${d} stalls`;
+
+      const speedup = (n * k) / (k + n - 1 + d);
+      const efficiency = (speedup / k) * 100;
+
+      document.getElementById('pipeSpeedupOut').textContent = `${speedup.toFixed(2)}x`;
+      document.getElementById('pipeEfficiencyOut').textContent = `${efficiency.toFixed(1)}%`;
+    }
+
+    // ================= 5-UNIT SYLLABUS ROADMAP =================
+    function showSyllabusRoadmap() {
+      hideAllViewerModes();
+      document.getElementById('syllabusContainer').classList.remove('hidden');
+
+      const study = appState.studyData[appState.activeSubjectId];
+      if (!study || !study.units) return;
+
+      document.getElementById('syllabusSubjectBadge').textContent = study.short;
+      document.getElementById('viewerTitle').textContent = `5-Unit Exam Syllabus & Weightage Roadmap: ${study.name}`;
+      document.getElementById('viewerFileSize').textContent = `(5 Units)`;
+      document.getElementById('viewerTypeBadge').textContent = 'Roadmap';
+      document.getElementById('viewerTypeBadge').className = 'font-sketch text-xs px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider bg-purple-200 text-slate-900 border-2 border-slate-900 shadow-[1.5px_1.5px_0px_#18181b]';
+
+      const container = document.getElementById('unitsRoadmapList');
+      container.innerHTML = '';
+
+      study.units.forEach(u => {
+        const item = document.createElement('div');
+        item.className = 'bg-white p-5 rounded-2xl sketch-border sketch-shadow flex flex-col md:flex-row md:items-start justify-between gap-4';
+        item.innerHTML = `
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1 flex-wrap">
+              <span class="font-sketch font-bold text-sm px-2 py-0.5 rounded bg-sky-100 border border-slate-900">Unit ${u.unit}</span>
+              <h3 class="font-sketch font-bold text-base text-slate-900">${u.title}</h3>
+              <span class="font-mono text-xs px-2 py-0.5 rounded bg-yellow-200 border border-slate-900 font-bold ml-auto">${u.weightage} Marks</span>
+            </div>
+            <p class="font-hand text-xs text-slate-700 mt-2"><span class="font-bold text-slate-900">Key Syllabus:</span> ${u.topics}</p>
+            <div class="mt-2.5 p-2 bg-yellow-50 rounded-lg border border-amber-300 text-xs font-hand text-amber-900 flex items-start gap-1.5">
+              <span>💡</span>
+              <div><span class="font-bold">Exam Secret:</span> ${u.high_yield_tip}</div>
+            </div>
+          </div>
+          <button onclick="jumpToUnitInTheory(${u.unit})" class="sketch-btn px-3 py-2 bg-sky-200 font-hand text-xs font-bold shrink-0 self-start md:self-center">
+            Open Chapter 📖
+          </button>
+        `;
+        container.appendChild(item);
+      });
+      refreshIcons();
+    }
+
+    function closeSyllabusView() {
+      const subj = appState.catalog.find(s => s.id === appState.activeSubjectId);
+      if (subj && subj.sections.theory.length > 0) {
+        openDocument(subj.sections.theory[0]);
+      }
+    }
+
+    function jumpToUnitInTheory(unitNum) {
+      const subj = appState.catalog.find(s => s.id === appState.activeSubjectId);
+      if (subj && subj.sections.theory.length > 0) {
+        const theoryDoc = subj.sections.theory[0];
+        if (theoryDoc.has_md && theoryDoc.md_path) {
+          showMarkdown(theoryDoc.md_path, `unit ${unitNum}`);
+        } else {
+          openDocument(theoryDoc);
+        }
+      }
+    }
+
+    function jumpToMarkdownHeading(anchorSearch) {
+      const targetQuery = anchorSearch.toLowerCase().replace('-', ' ').trim();
+      const allHeadings = Array.from(document.querySelectorAll('#mdViewerContent h1, #mdViewerContent h2, #mdViewerContent h3'));
+      const target = allHeadings.find(el => el.textContent.toLowerCase().includes(targetQuery));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Pulse effect
+        target.classList.add('ring-2', 'ring-yellow-400');
+        setTimeout(() => target.classList.remove('ring-2', 'ring-yellow-400'), 1500);
+      }
+    }
+
+    // ================= DOODLE SCRATCHPAD CANVAS =================
+    let scratchCanvas, scratchCtx, isDrawing = false;
+    let brushColor = '#18181b', brushSize = 5, isHighlighter = false, isEraser = false;
+    const strokeHistory = [];
+
+    function initScratchpad() {
+      scratchCanvas = document.getElementById('scratchCanvas');
+      if (!scratchCanvas) return;
+      scratchCtx = scratchCanvas.getContext('2d');
+
+      function resizeScratchpadCanvas() {
+        const wrapper = document.getElementById('scratchCanvasWrapper');
+        if (!wrapper) return;
+        const rect = wrapper.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+
+        // Save current canvas content to avoid clearing on resize
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = scratchCanvas.width;
+        tempCanvas.height = scratchCanvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        if (scratchCanvas.width > 0 && scratchCanvas.height > 0) {
+          tempCtx.drawImage(scratchCanvas, 0, 0);
+        }
+
+        scratchCanvas.width = rect.width;
+        scratchCanvas.height = rect.height;
+
+        // Restore image buffer
+        if (tempCanvas.width > 0 && tempCanvas.height > 0) {
+          scratchCtx.drawImage(tempCanvas, 0, 0);
+        } else {
+          // Restore from localStorage if fresh load
+          const savedData = localStorage.getItem('nitj_scratchpad_data');
+          if (savedData) {
+            const img = new Image();
+            img.onload = () => scratchCtx.drawImage(img, 0, 0);
+            img.src = savedData;
+          }
+        }
+      }
+
+      window.addEventListener('resize', resizeScratchpadCanvas);
+
+      // Mouse Events
+      scratchCanvas.addEventListener('mousedown', startDrawing);
+      scratchCanvas.addEventListener('mousemove', draw);
+      scratchCanvas.addEventListener('mouseup', stopDrawing);
+      scratchCanvas.addEventListener('mouseleave', stopDrawing);
+
+      // Touch Events for Tablets & Styluses (Prevent page scroll while drawing)
+      scratchCanvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        startDrawing({ clientX: touch.clientX, clientY: touch.clientY });
+      }, { passive: false });
+
+      scratchCanvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        draw({ clientX: touch.clientX, clientY: touch.clientY });
+      }, { passive: false });
+
+      scratchCanvas.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        stopDrawing();
+      }, { passive: false });
+
+      scratchCanvas.addEventListener('touchcancel', (e) => {
+        e.preventDefault();
+        stopDrawing();
+      }, { passive: false });
+
+      // Color selection
+      document.querySelectorAll('.scratch-color-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          isHighlighter = false;
+          isEraser = false;
+          brushColor = btn.dataset.color;
+          document.querySelectorAll('.scratch-color-btn').forEach(b => b.classList.remove('ring-2', 'ring-slate-400'));
+          btn.classList.add('ring-2', 'ring-slate-400');
+          document.getElementById('highlighterBrushBtn').className = 'sketch-btn px-1.5 py-0.5 bg-yellow-200 text-[10px] font-hand font-bold ml-1';
+          document.getElementById('eraserBrushBtn').className = 'sketch-btn px-1.5 py-0.5 bg-white text-[10px] font-hand font-bold';
+        });
+      });
+
+      // Size selection
+      document.querySelectorAll('.scratch-size-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          brushSize = parseInt(btn.dataset.size, 10);
+          document.querySelectorAll('.scratch-size-btn').forEach(b => b.className = 'scratch-size-btn sketch-btn px-1.5 py-0.5 bg-white text-[10px] font-mono font-bold');
+          btn.className = 'scratch-size-btn sketch-btn px-1.5 py-0.5 bg-yellow-100 text-[10px] font-mono font-bold';
+        });
+      });
+
+      // Highlighter Mode
+      document.getElementById('highlighterBrushBtn').addEventListener('click', () => {
+        isHighlighter = !isHighlighter;
+        isEraser = false;
+        const btn = document.getElementById('highlighterBrushBtn');
+        document.getElementById('eraserBrushBtn').className = 'sketch-btn px-1.5 py-0.5 bg-white text-[10px] font-hand font-bold';
+        if (isHighlighter) {
+          btn.className = 'sketch-btn px-1.5 py-0.5 bg-yellow-300 text-[10px] font-hand font-bold ml-1 ring-2 ring-slate-900';
+          brushColor = 'rgba(254, 240, 138, 0.45)';
+          brushSize = 18;
+        } else {
+          btn.className = 'sketch-btn px-1.5 py-0.5 bg-yellow-200 text-[10px] font-hand font-bold ml-1';
+          brushColor = '#18181b';
+          brushSize = 5;
+        }
+      });
+
+      // Eraser Mode
+      document.getElementById('eraserBrushBtn').addEventListener('click', () => {
+        isEraser = !isEraser;
+        isHighlighter = false;
+        const btn = document.getElementById('eraserBrushBtn');
+        document.getElementById('highlighterBrushBtn').className = 'sketch-btn px-1.5 py-0.5 bg-yellow-200 text-[10px] font-hand font-bold ml-1';
+        if (isEraser) {
+          btn.className = 'sketch-btn px-1.5 py-0.5 bg-rose-200 text-[10px] font-hand font-bold ring-2 ring-slate-900';
+          brushSize = 20;
+        } else {
+          btn.className = 'sketch-btn px-1.5 py-0.5 bg-white text-[10px] font-hand font-bold';
+          brushColor = '#18181b';
+          brushSize = 5;
+        }
+      });
+
+      // Undo Feature
+      document.getElementById('undoScratchBtn').addEventListener('click', () => {
+        if (strokeHistory.length > 0) {
+          const lastImage = strokeHistory.pop();
+          scratchCtx.putImageData(lastImage, 0, 0);
+          localStorage.setItem('nitj_scratchpad_data', scratchCanvas.toDataURL());
+        }
+      });
+
+      // Clear Canvas
+      document.getElementById('clearScratchBtn').addEventListener('click', () => {
+        if (confirm('Clear your scratchpad notes?')) {
+          saveHistorySnapshot();
+          scratchCtx.clearRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+          localStorage.removeItem('nitj_scratchpad_data');
+        }
+      });
+
+      // Download Canvas as PNG
+      document.getElementById('downloadScratchBtn').addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.download = `NITJ_${appState.activeSubjectId}_doodle_notes.png`;
+        link.href = scratchCanvas.toDataURL();
+        link.click();
+      });
+
+      // Toggle Drawer
+      document.getElementById('scratchpadToggleBtn').addEventListener('click', () => {
+        const drawer = document.getElementById('scratchpadDrawer');
+        drawer.classList.toggle('hidden');
+        if (!drawer.classList.contains('hidden')) {
+          resizeScratchpadCanvas();
+        }
+      });
+
+      document.getElementById('closeScratchBtn').addEventListener('click', () => {
+        document.getElementById('scratchpadDrawer').classList.add('hidden');
+      });
+    }
+
+    function saveHistorySnapshot() {
+      if (scratchCtx && scratchCanvas.width > 0 && scratchCanvas.height > 0) {
+        if (strokeHistory.length >= 15) strokeHistory.shift();
+        strokeHistory.push(scratchCtx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height));
+      }
+    }
+
+    function getCanvasCoordinates(e) {
+      const rect = scratchCanvas.getBoundingClientRect();
+      const scaleX = scratchCanvas.width / rect.width;
+      const scaleY = scratchCanvas.height / rect.height;
+      return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+      };
+    }
+
+    function startDrawing(e) {
+      isDrawing = true;
+      saveHistorySnapshot();
+      scratchCtx.beginPath();
+      const coords = getCanvasCoordinates(e);
+      scratchCtx.moveTo(coords.x, coords.y);
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      const coords = getCanvasCoordinates(e);
+
+      scratchCtx.lineTo(coords.x, coords.y);
+      if (isEraser) {
+        scratchCtx.globalCompositeOperation = 'destination-out';
+        scratchCtx.strokeStyle = 'rgba(0,0,0,1)';
+        scratchCtx.lineWidth = brushSize;
+      } else {
+        scratchCtx.globalCompositeOperation = 'source-over';
+        scratchCtx.strokeStyle = brushColor;
+        scratchCtx.lineWidth = brushSize;
+      }
+      scratchCtx.lineCap = 'round';
+      scratchCtx.lineJoin = 'round';
+      scratchCtx.stroke();
+    }
+
+    function stopDrawing() {
+      if (isDrawing) {
+        isDrawing = false;
+        scratchCtx.closePath();
+        scratchCtx.globalCompositeOperation = 'source-over';
+        localStorage.setItem('nitj_scratchpad_data', scratchCanvas.toDataURL());
+      }
+    }
+
+    // ================= POMODORO SPRINT TIMER =================
+    function initPomodoro() {
+      const modal = document.getElementById('pomodoroModal');
+      document.getElementById('pomodoroModalBtn').addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+      document.getElementById('closePomodoroBtn').addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+
+      document.getElementById('startTimerBtn').addEventListener('click', startPomodoro);
+      document.getElementById('pauseTimerBtn').addEventListener('click', pausePomodoro);
+      document.getElementById('resetTimerBtn').addEventListener('click', resetPomodoro);
+      updateTimerDisplay();
+    }
+
+    function setPomodoroPreset(focusMins, breakMins) {
+      pausePomodoro();
+      appState.pomodoroFocusDuration = focusMins * 60;
+      appState.pomodoroBreakDuration = breakMins * 60;
+      appState.pomodoroRemaining = appState.pomodoroFocusDuration;
+      appState.pomodoroMode = 'focus';
+      updateTimerDisplay();
+    }
+
+    function startPomodoro() {
+      if (appState.pomodoroRunning) return;
+      appState.pomodoroRunning = true;
+      appState.pomodoroTimer = setInterval(tickPomodoro, 1000);
+    }
+
+    function pausePomodoro() {
+      appState.pomodoroRunning = false;
+      clearInterval(appState.pomodoroTimer);
+    }
+
+    function resetPomodoro() {
+      pausePomodoro();
+      appState.pomodoroRemaining = appState.pomodoroFocusDuration;
+      appState.pomodoroMode = 'focus';
+      updateTimerDisplay();
+    }
+
+    function tickPomodoro() {
+      if (appState.pomodoroRemaining > 0) {
+        appState.pomodoroRemaining--;
+        updateTimerDisplay();
+      } else {
+        pausePomodoro();
+        playAcousticChime();
+        if (appState.pomodoroMode === 'focus') {
+          appState.sprintsCompleted++;
+          localStorage.setItem('nitj_sprints_completed', String(appState.sprintsCompleted));
+          updateTallyMarks();
+          appState.pomodoroMode = 'break';
+          appState.pomodoroRemaining = appState.pomodoroBreakDuration;
+          if (window.confetti) {
+            confetti({ particleCount: 35, spread: 50, origin: { y: 0.6 } });
+          }
+          alert('🎉 Awesome study sprint completed! Take your scheduled sketch break.');
+        } else {
+          alert('⏰ Break finished! Ready for the next deep sprint?');
+          appState.pomodoroMode = 'focus';
+          appState.pomodoroRemaining = appState.pomodoroFocusDuration;
+        }
+        updateTimerDisplay();
+      }
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(appState.pomodoroRemaining / 60);
+      const secs = appState.pomodoroRemaining % 60;
+      const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      
+      document.getElementById('modalTimerDisplay').textContent = formatted;
+      document.getElementById('headerTimerBadge').textContent = formatted;
+      document.getElementById('pomodoroModeLabel').textContent = appState.pomodoroMode === 'focus' ? 'Focus Mode' : 'Break Time';
+    }
+
+    function updateTallyMarks() {
+      let marks = '';
+      const fives = Math.floor(appState.sprintsCompleted / 5);
+      const remainder = appState.sprintsCompleted % 5;
+      for (let i = 0; i < fives; i++) marks += '<s>||||</s> ';
+      for (let i = 0; i < remainder; i++) marks += '|';
+      document.getElementById('sprintTallyMarks').innerHTML = marks || 'None yet';
+    }
+
+    // ================= FULL-TEXT & TITLE SEARCH =================
+    let searchTimeout = null;
+    const searchInput = document.getElementById('searchDocInput');
+    const searchOverlay = document.getElementById('searchOverlay');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.trim();
+      if (q.length > 0) {
+        clearSearchBtn.classList.remove('hidden');
+      } else {
+        clearSearchBtn.classList.add('hidden');
+        searchOverlay.classList.add('hidden');
+      }
+
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        if (q.length >= 2) {
+          performLiveSearch(q);
+        }
+      }, 200);
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      clearSearchBtn.classList.add('hidden');
+      searchOverlay.classList.add('hidden');
+      const subj = appState.catalog.find(s => s.id === appState.activeSubjectId);
+      if (subj) renderSidebarList(subj);
+    });
+
+    document.getElementById('closeSearchOverlayBtn').addEventListener('click', () => {
+      searchOverlay.classList.add('hidden');
+    });
+
+    async function performLiveSearch(query) {
+      try {
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        const data = await res.json();
+
+        document.getElementById('searchResultCount').textContent = `${data.total} hits`;
+        const list = document.getElementById('searchResultsList');
+        list.innerHTML = '';
+
+        if (data.results.length === 0) {
+          list.innerHTML = '<div class="text-slate-500 font-hand text-center py-6">No matching notes or formulas found. Try another term!</div>';
+        } else {
+          data.results.forEach(item => {
+            const row = document.createElement('div');
+            row.className = 'p-3 rounded-xl sketch-border bg-slate-50 hover:bg-yellow-100 cursor-pointer transition-all flex items-start gap-2.5';
+            
+            const badgeType = item.type === 'formula' ? 'bg-amber-100 text-amber-900' :
+                              item.type === 'flashcard' ? 'bg-emerald-100 text-emerald-900' :
+                              item.type === 'exam_question' ? 'bg-rose-100 text-rose-900' : 'bg-sky-100 text-sky-900';
+
+            row.innerHTML = `
+              <span class="font-mono text-xs px-1.5 py-0.5 rounded ${badgeType} border border-slate-900 font-bold shrink-0">${item.subject_short}</span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <span class="font-sketch font-bold text-xs text-slate-900">${item.doc_title}</span>
+                  ${item.line ? `<span class="font-mono text-[10px] text-slate-400">Line ${item.line}</span>` : ''}
+                </div>
+                <p class="font-hand text-xs text-slate-700 mt-1 line-clamp-2">${item.snippet}</p>
+              </div>
+            `;
+
+            row.addEventListener('click', () => {
+              searchOverlay.classList.add('hidden');
+              
+              // 1. Synchronize Subject Tab & Sidebar State
+              if (item.subject_id && item.subject_id !== appState.activeSubjectId) {
+                selectSubject(item.subject_id);
+              }
+
+              // 2. Route directly to appropriate viewer mode
+              if (item.type === 'formula') {
+                showCheatSheet();
+                setTimeout(() => {
+                  const targetCard = Array.from(document.querySelectorAll('.formula-card-item')).find(c => c.dataset.title === item.formula_title);
+                  if (targetCard) {
+                    targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    targetCard.classList.add('ring-2', 'ring-yellow-400');
+                    setTimeout(() => targetCard.classList.remove('ring-2', 'ring-yellow-400'), 1500);
+                  }
+                }, 200);
+
+              } else if (item.type === 'flashcard') {
+                showFlashcards();
+                if (item.card_q) {
+                  const idx = appState.activeDeck.findIndex(c => c.q === item.card_q);
+                  if (idx !== -1) {
+                    appState.currentCardIndex = idx;
+                    updateFlashcardUI();
+                  }
+                }
+
+              } else if (item.type === 'exam_question') {
+                showExamPractice(item.q_id);
+
+              } else if (item.type === 'unit') {
+                jumpToUnitInTheory(item.unit_num);
+
+              } else if (item.type === 'markdown' && item.rel_path) {
+                showMarkdown(item.rel_path);
+                if (item.line) {
+                  setTimeout(() => {
+                    // Approximate scroll to line percentage
+                    const container = document.getElementById('mdViewerContainer');
+                    const approxScroll = (item.line / 2000) * container.scrollHeight;
+                    container.scrollTo({ top: approxScroll, behavior: 'smooth' });
+                  }, 350);
+                }
+
+              } else if (item.pdf_path) {
+                showPdf(item.pdf_path);
+              }
+            });
+
+            list.appendChild(row);
+          });
+        }
+
+        renderMath(list);
+        searchOverlay.classList.remove('hidden');
+      } catch (err) {
+        console.error('Search failed:', err);
+      }
+    }
+
+    // ================= KEYBOARD & ACTION BINDINGS =================
+    function initKeyboardShortcuts() {
+      window.addEventListener('keydown', (e) => {
+        // Spacebar flips active flashcard if flashcard mode is visible
+        if (e.code === 'Space' && !document.getElementById('flashcardsContainer').classList.contains('hidden') && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          flipActiveCard();
+        }
+        // Esc closes overlays
+        if (e.code === 'Escape') {
+          document.getElementById('searchOverlay').classList.add('hidden');
+          document.getElementById('pomodoroModal').classList.add('hidden');
+          document.getElementById('scratchpadDrawer').classList.add('hidden');
+        }
+      });
+
+      // View mode buttons
+      document.getElementById('modePdfBtn').addEventListener('click', () => {
+        appState.viewMode = 'pdf';
+        if (appState.activeItem) showPdf(appState.activeItem.rel_path);
+      });
+
+      document.getElementById('modeMdBtn').addEventListener('click', () => {
+        appState.viewMode = 'md';
+        if (appState.activeItem && appState.activeItem.has_md) {
+          showMarkdown(appState.activeItem.md_path);
+        } else if (appState.activeItem && appState.activeItem.type === 'md') {
+          showMarkdown(appState.activeItem.rel_path);
+        } else {
+          const subj = appState.catalog.find(s => s.id === appState.activeSubjectId);
+          if (subj && subj.sections.theory.length > 0) {
+            openDocument(subj.sections.theory[0]);
+            showMarkdown(subj.sections.theory[0].md_path);
+          }
+        }
+      });
+
+      document.getElementById('modeCheatBtn').addEventListener('click', showCheatSheet);
+      document.getElementById('modeCardsBtn').addEventListener('click', showFlashcards);
+      document.getElementById('modeExamBtn').addEventListener('click', () => showExamPractice());
+      document.getElementById('modeCalcBtn').addEventListener('click', showCalculators);
+
+      // Flashcard interactions
+      document.getElementById('activeFlashcardElement').addEventListener('click', flipActiveCard);
+      document.getElementById('nextCardBtn').addEventListener('click', nextFlashcard);
+      document.getElementById('prevCardBtn').addEventListener('click', prevFlashcard);
+      document.getElementById('shuffleCardsBtn').addEventListener('click', shuffleFlashcards);
+
+      // Quick sidebar shortcuts
+      document.getElementById('quickCheatsheetBtn').addEventListener('click', showCheatSheet);
+      document.getElementById('quickFlashcardsBtn').addEventListener('click', showFlashcards);
+      document.getElementById('quickExamSimBtn').addEventListener('click', () => showExamPractice());
+      document.getElementById('quickCalcBtn').addEventListener('click', showCalculators);
+      document.getElementById('quickSyllabusBtn').addEventListener('click', showSyllabusRoadmap);
+
+      // Top action buttons
+      document.getElementById('downloadActiveBtn').addEventListener('click', () => {
+        if (!appState.activeItem) return;
+        window.open(`/api/download?path=${encodeURIComponent(appState.activeItem.rel_path)}`, '_blank');
+      });
+
+      document.getElementById('openNewTabBtn').addEventListener('click', () => {
+        if (!appState.activeItem) return;
+        if (appState.activeItem.type === 'pdf') {
+          window.open(`/api/pdf?path=${encodeURIComponent(appState.activeItem.rel_path)}`, '_blank');
+        } else if (appState.activeItem.type === 'image') {
+          window.open(`/api/image?path=${encodeURIComponent(appState.activeItem.rel_path)}`, '_blank');
+        } else {
+          window.open(`/api/download?path=${encodeURIComponent(appState.activeItem.rel_path)}`, '_blank');
+        }
+      });
+
+      // Copy Markdown text button
+      const copyMdBtn = document.getElementById('copyMdTextBtn');
+      if (copyMdBtn) {
+        copyMdBtn.addEventListener('click', () => {
+          const content = document.getElementById('mdViewerContent').innerText;
+          navigator.clipboard.writeText(content);
+          alert('Copied notes to clipboard!');
+        });
+      }
+    }
+
+    // Launch Application
+    initApp();
+  </script>
+</body>
+</html>

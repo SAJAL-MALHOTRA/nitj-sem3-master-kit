@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main>
+        <h1>Student Registration Form</h1>
+
+        <form>
+            <fieldset>
+                <legend>Student Details</legend>
+
+                <p>
+                    <label for="name">Name:</label><br>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           placeholder="Enter your name">
+                </p>
+
+                <p>
+                    <label>Gender:</label><br>
+
+                    <input type="radio"
+                           id="male"
+                           name="gender"
+                           value="Male">
+                    <label for="male">Male</label>
+
+                    <input type="radio"
+                           id="female"
+                           name="gender"
+                           value="Female">
+                    <label for="female">Female</label>
+
+                    <input type="radio"
+                           id="other"
+                           name="gender"
+                           value="Other">
+                    <label for="other">Other</label>
+                </p>
+
+                <p>
+                    <label for="year">Choose B.Tech Year:</label><br>
+
+                    <select id="year" name="year">
+                        <option value="">-- Select Year --</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label>Select Five Subjects:</label><br>
+
+                    <input type="checkbox"
+                           id="DSS"
+                           name="subjects"
+                           value="DSS">
+                    <label for="maths">Discrete Mathematics</label><br>
+                    <input type="checkbox"
+                           id="oops"
+                           name="subjects"
+                           value="oops">
+                    <label for="maths">OOPS</label><br>
+                    <input type="checkbox"
+                           id="dsa"
+                           name="subjects"
+                           value="Data Structures">
+                    <label for="dsa">Data Structures</label><br>
+
+                    <input type="checkbox"
+                           id="dbms"
+                           name="subjects"
+                           value="DBMS">
+                    <label for="dbms">DBMS</label><br>
+
+                    <input type="checkbox"
+                           id="os"
+                           name="subjects"
+                           value="Computer System Architecture">
+                    <label for="os">Computer System Architecture</label><br>
+
+                    <input type="checkbox"
+                           id="web"
+                           name="subjects"
+                           value="Web Development">
+                    <label for="web">Web Development</label>
+                </p>
+
+                <p>
+                    <label for="comments">Any Other Comments:</label><br>
+
+                    <textarea id="comments"
+                              name="comments"
+                              rows="5"
+                              placeholder="Enter your comments here..."></textarea>
+                </p>
+
+                <p>
+                    <input type="submit" value="Submit">
+                </p>
+
+            </fieldset>
+        </form>
+    </main>
+
+</body>
+
+</html>

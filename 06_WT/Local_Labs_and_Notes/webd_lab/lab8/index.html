@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 6: Lazy Loading Demonstration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      padding-bottom: 80px;
+    }
+    header {
+      background: #1e293b;
+      color: #fff;
+      padding: 24px;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .banner {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 30px;
+    }
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .card img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+      background-color: #e2e8f0; /* placeholder while loading */
+    }
+    .card h3 {
+      margin-top: 12px;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Web Performance Optimization Lab</h1>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Above-the-Fold Hero Banner</h2>
+      <img 
+        src="https://picsum.photos/id/1018/1000/500" 
+        alt="Mountain landscape banner" 
+        class="banner"
+        width="1000" 
+        height="500"
+      >
+    </section>
+
+    <section class="gallery">
+      <h2>Below-the-Fold Gallery</h2>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1015/900/500" alt="River in canyon" loading="lazy" width="900" height="500">
+        <h3>Image 1: River Valley</h3>
+      </div>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1016/900/500" alt="Autumn forest trail" loading="lazy" width="900" height="500">
+        <h3>Image 2: Canyon View</h3>
+      </div>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1019/900/500" alt="Forest mist" loading="lazy" width="900" height="500">
+        <h3>Image 3: Forest Light</h3>
+      </div>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1025/900/500" alt="Pug wrapped in blanket" loading="lazy" width="900" height="500">
+        <h3>Image 4: Wrapped Dog</h3>
+      </div>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1036/900/500" alt="Winter mountain summit" loading="lazy" width="900" height="500">
+        <h3>Image 5: Snowy Peak</h3>
+      </div>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1039/900/500" alt="Waterfall cascade" loading="lazy" width="900" height="500">
+        <h3>Image 6: Cascading Falls</h3>
+      </div>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1043/900/500" alt="Golden coast line" loading="lazy" width="900" height="500">
+        <h3>Image 7: Coastal Ridge</h3>
+      </div>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1050/900/500" alt="Rolling hills" loading="lazy" width="900" height="500">
+        <h3>Image 8: Countryside Fields</h3>
+      </div>
+
+      <div class="card">
+        <img src="https://picsum.photos/id/1057/900/500" alt="Ocean waves on rocks" loading="lazy" width="900" height="500">
+        <h3>Image 9: Sea Waves</h3>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+.box{
+    margin: 50px;
+    background-color: pink;
+    height: 150px;
+    width: 150px;
+
+    transform: translateX(0);
+
+    transition-duration: 2s;
+    transition-property: all;
+}
+.box:hover {
+    background-color: red;
+
+    transform:
+        scale(0.5)
+        translateX(-50px)
+        rotate(10deg);
+
+    width: 150px;
+    height: 150px;
+
+    box-shadow:
+        rgba(0, 0, 0, 0.75)
+        9px 9px 19px;
+}
+.box-linear{
+  transition-timing-function: linear;
+}
+.box-ease{
+  transition-timing-funtion: ease;
+}
+.box-ease-in{
+  transition-timing-function: ease-in;
+}
+.box-ease-out{
+  transition-timing-function:ease-out;
+}
+.box-ease-in-out{
+  transition-timing-function:ease-in-out;
+}

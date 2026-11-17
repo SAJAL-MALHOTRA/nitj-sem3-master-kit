@@ -1,0 +1,177 @@
+// Binary Tree basics, written for learning.
+//
+/*
+   The tree we build:
+
+            1
+           / \
+          2   3
+         / \ / \
+        4  5 6  7
+*/
+// Big idea: a tree is a node plus two smaller trees (left and right).
+// So almost every function follows the same two steps:
+//   1. BASE CASE : if the node is nullptr (empty tree), return a simple answer.
+//   2. RECURSE   : solve for the left tree, solve for the right tree,
+//                  then combine the two answers with this node.
+
+#include <iostream>
+#include <algorithm>   // for max()
+using namespace std;
+
+// ---------------------------------------------------------------
+// 1. THE NODE
+// ---------------------------------------------------------------
+struct Node {
+    int value;      // the data stored in this node
+    Node* left;     // pointer to the left child  (nullptr = no left child)
+    Node* right;    // pointer to the right child (nullptr = no right child)
+
+    // Constructor: makes a node with a value and no children yet.
+    Node(int v) {
+        value = v;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+// ---------------------------------------------------------------
+// 2. TRAVERSALS: visiting every node once.
+//    The ONLY difference between them is when we print the node
+//    compared with the two recursive calls.
+// ---------------------------------------------------------------
+
+// PRE-order: node first, then left, then right.   ("visit me BEFORE my children")
+void preOrder(Node* node) {
+    if (node == nullptr) return;       // base case: empty tree, nothing to do
+    cout << node->value << " ";        // visit the node
+    preOrder(node->left);              // then the whole left subtree
+    preOrder(node->right);             // then the whole right subtree
+}
+
+// IN-order: left, then node, then right.          ("visit me IN BETWEEN my children")
+// On a binary SEARCH tree this prints values in sorted order.
+void inOrder(Node* node) {
+    if (node == nullptr) return;
+    inOrder(node->left);
+    cout << node->value << " ";
+    inOrder(node->right);
+}
+
+// POST-order: left, then right, then node.        ("visit me AFTER my children")
+// Used when children must be handled before the parent, e.g. deleting a tree.
+void postOrder(Node* node) {
+    if (node == nullptr) return;
+    postOrder(node->left);
+    postOrder(node->right);
+    cout << node->value << " ";
+}
+
+// ---------------------------------------------------------------
+// 3. MEASURING THE TREE
+// ---------------------------------------------------------------
+
+// Height = number of levels. An empty tree has height 0, a single node has height 1.
+// Rule: my height = 1 (for me) + the taller of my two subtrees.
+int height(Node* node) {
+    if (node == nullptr) return 0;
+    int leftHeight  = height(node->left);
+    int rightHeight = height(node->right);
+    return 1 + max(leftHeight, rightHeight);
+}
+
+// Count all nodes.  Rule: me (1) + nodes on the left + nodes on the right.
+int countNodes(Node* node) {
+    if (node == nullptr) return 0;
+    return 1 + countNodes(node->left) + countNodes(node->right);
+}
+
+// Leaf = a node with NO children.
+int countLeaves(Node* node) {
+    if (node == nullptr) return 0;
+    if (node->left == nullptr && node->right == nullptr) {
+        return 1;                       // I am a leaf, I count as one
+    }
+    return countLeaves(node->left) + countLeaves(node->right);
+}
+
+// Internal node = a node with AT LEAST ONE child (i.e. not a leaf).
+// Handy check: leaves + internal nodes = total nodes.
+int countInternal(Node* node) {
+    if (node == nullptr) return 0;
+    if (node->left == nullptr && node->right == nullptr) {
+        return 0;                       // leaf, so not internal
+    }
+    return 1 + countInternal(node->left) + countInternal(node->right);
+}
+
+// ---------------------------------------------------------------
+// 4. SEARCH
+//    This is a plain binary tree (not a search tree), so values are in no
+//    particular order. We have to check every node until we find it.
+// ---------------------------------------------------------------
+bool contains(Node* node, int target) {
+    if (node == nullptr) return false;          // fell off the tree: not found
+    if (node->value == target) return true;     // found it here
+    // Not here, so look left. If not found there, look right.
+    // (|| stops early: if the left side says true, the right is never searched.)
+    return contains(node->left, target) || contains(node->right, target);
+}
+
+// ---------------------------------------------------------------
+// 5. PRINT THE SHAPE: each level is indented 4 more spaces.
+// ---------------------------------------------------------------
+void printTree(Node* node, int depth, string label) {
+    if (node == nullptr) return;
+    for (int i = 0; i < depth; i++) cout << "    ";     // indentation
+    cout << label << ": " << node->value << "\n";
+    printTree(node->left,  depth + 1, "Left");
+    printTree(node->right, depth + 1, "Right");
+}
+
+// ---------------------------------------------------------------
+// 6. CLEAN UP: every `new` needs a matching `delete`.
+//    Post-order: delete the children FIRST, then the node itself.
+//    (If we deleted the node first we'd lose the pointers to its children.)
+// ---------------------------------------------------------------
+void deleteTree(Node* node) {
+    if (node == nullptr) return;
+    deleteTree(node->left);
+    deleteTree(node->right);
+    delete node;
+}
+
+// ---------------------------------------------------------------
+// MAIN: build the tree and try every function.
+// ---------------------------------------------------------------
+int main() {
+    // `new Node(1)` creates a node on the heap and gives back its address.
+    Node* root = new Node(1);
+
+    // Connect children by assigning to the left/right pointers.
+    root->left  = new Node(2);
+    root->right = new Node(3);
+    root->left->left   = new Node(4);   // children of 2
+    root->left->right  = new Node(5);
+    root->right->left  = new Node(6);   // children of 3
+    root->right->right = new Node(7);
+
+    cout << "Shape of the tree:\n";
+    printTree(root, 0, "Root");
+
+    cout << "\nPre-order  (node, left, right): ";  preOrder(root);   cout << "\n";
+    cout << "In-order   (left, node, right): ";    inOrder(root);    cout << "\n";
+    cout << "Post-order (left, right, node): ";    postOrder(root);  cout << "\n";
+
+    cout << "\nHeight:         " << height(root)        << "\n";   // 3
+    cout << "Total nodes:    " << countNodes(root)    << "\n";   // 7
+    cout << "Leaf nodes:     " << countLeaves(root)   << "\n";   // 4 (4,5,6,7)
+    cout << "Internal nodes: " << countInternal(root) << "\n";   // 3 (1,2,3)
+
+    cout << boolalpha;   // print true/false instead of 1/0
+    cout << "\nContains 4? " << contains(root, 4) << "\n";   // true
+    cout << "Contains 8? " << contains(root, 8) << "\n";     // false
+
+    deleteTree(root);    // free all 7 nodes
+    return 0;
+}

@@ -1,0 +1,53 @@
+// ---------------------------------------------------------------
+// Task 9 - Pointer to Constant (function parameter)
+// ---------------------------------------------------------------
+void showStudent(const Student* s) {
+    cout << "Roll No: " << s->rollno << endl;
+    cout << "Name   : " << s->name << endl;
+    cout << "Age    : " << s->age << endl;
+    cout << "Marks  : " << s->marks << endl;
+    cout << "Grade  : " << s->grade << endl;
+
+    // s->marks = 100;   // ERROR: cannot assign to member through pointer-to-const
+}
+
+void task9() {
+    heading("Task 9 - Pointer to Constant");
+    Student s(9, "Isha", 20, 82.0f, 'A');
+    showStudent(&s);
+    cout << "\nData can be read through 'const Student*' but any write\n"
+            "(e.g. s->marks = 100;) is a compile-time error." << endl;
+}
+
+// ---------------------------------------------------------------
+// Task 10 - Pointer to Pointer
+// ---------------------------------------------------------------
+void task10() {
+    heading("Task 10 - Pointer to Pointer");
+    Student s(10, "Jatin", 21, 60.0f, 'C');
+    Student* p = &s;
+    Student** pp = &p;
+
+    cout << "Before:" << endl;
+    s.display();
+
+    (*pp)->marks = 89.0f;   // same as (**pp).marks
+    (*pp)->grade = 'A';
+
+    cout << "After modifying through student**:" << endl;
+    (*pp)->display();
+}
+
+int main() {
+    task1();
+    task2();
+    task3();
+    task4();
+    task5();
+    task6();
+    task7();
+    task8();
+    task9();
+    task10();
+    return 0;
+}
